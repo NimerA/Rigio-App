@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<resources>
+	<string name="app_name">Rigio</string>
+	<!--<string name="facebook_app_id">1743154612651998</string>
+	<string name="fb_login_protocol_scheme">fb1743154612651998</string>-->
+	
+	<string name="facebook_app_id">1973163136302451</string>
+	<string name="fb_login_protocol_scheme">fb1973163136302451</string>
+
+	<integer name="com_vk_sdk_AppId">5874073</integer>
+	<string name="vk_data_theme">vk5874073</string>
+
+</resources>

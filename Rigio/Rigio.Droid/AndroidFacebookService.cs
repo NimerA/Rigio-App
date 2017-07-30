@@ -17,7 +17,7 @@ namespace Rigio.Droid
         public static AndroidFacebookService Instance => DependencyService.Get<IFacebookService>() as AndroidFacebookService;
 
         readonly ICallbackManager _callbackManager = CallbackManagerFactory.Create();
-        readonly string[] _permissions = { @"public_profile", @"email", @"user_about_me" };
+        readonly string[] _permissions = { @"public_profile" };
 
         LoginResult _loginResult;
         TaskCompletionSource<LoginResult> _completionSource;
@@ -29,15 +29,9 @@ namespace Rigio.Droid
 
         public Task<LoginResult> Login()
         {
-	        try {
-		        _completionSource = new TaskCompletionSource<LoginResult>();
-		        LoginManager.Instance.LogInWithReadPermissions(Forms.Context as Activity, _permissions);
-		        return _completionSource.Task;
-	        }
-	        catch (System.Exception ex) {
-		        System.Console.WriteLine(ex);
-	        }
-			return null;
+            _completionSource = new TaskCompletionSource<LoginResult>();
+            LoginManager.Instance.LogInWithReadPermissions(Forms.Context as Activity, _permissions);
+            return _completionSource.Task;
         }
 
         public void Logout()

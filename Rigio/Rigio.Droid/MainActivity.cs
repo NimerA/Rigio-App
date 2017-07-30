@@ -33,9 +33,10 @@ namespace Rigio.Droid
             AppEventsLogger.ActivateApp(Application);
         }
 
-        protected override async void OnActivityResult(int requestCode, Result resultCode, Intent data)
+        protected override void OnActivityResult(int requestCode, Result resultCode, Intent data)
         {
-          
+            base.OnActivityResult(requestCode, resultCode, data);
+            AndroidFacebookService.Instance.OnActivityResult(requestCode, (int)resultCode, data);
         }
     }
 }

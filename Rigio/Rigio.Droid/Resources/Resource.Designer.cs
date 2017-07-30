@@ -3050,9 +3050,6 @@ namespace Rigio.Droid
 			// aapt resource value: 0x7f090006
 			public const int cancel_button_image_alpha = 2131296262;
 			
-			// aapt resource value: 0x7f09000a
-			public const int com_vk_sdk_AppId = 2131296266;
-			
 			// aapt resource value: 0x7f090008
 			public const int design_snackbar_text_max_lines = 2131296264;
 			

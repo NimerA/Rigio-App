@@ -14,14 +14,14 @@
 				<data android:scheme="@string/fb_login_protocol_scheme" />
 			</intent-filter>
 		</activity>
-		<activity android:name="com.binwell.login.MainActivity" android:exported="true">
+		<!--<activity android:name="com.Rigio.Login.MainActivity" android:exported="true">
 			<intent-filter>
 				<action android:name="android.intent.action.VIEW" />
 				<category android:name="android.intent.category.DEFAULT" />
 				<category android:name="android.intent.category.BROWSABLE" />
 				<data android:scheme="@string/vk_data_theme" />
 			</intent-filter>
-		</activity>
-		<provider android:authorities="com.facebook.app.FacebookContentProvider1973163136302451" android:name="com.facebook.FacebookContentProvider" android:exported="true" />
+		</activity>-->
+		<provider android:authorities="com.facebook.app.FacebookContentProvider841549236010978" android:name="com.facebook.FacebookContentProvider" android:exported="true" />
 	</application>
 </manifest>

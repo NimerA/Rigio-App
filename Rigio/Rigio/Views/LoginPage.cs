@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Rigio.Data;
+using Rigio.Models;
 using Xamarin.Forms;
 
-namespace Rigio
+namespace Rigio.Views
 {
     public class LoginPage : ContentPage
     {

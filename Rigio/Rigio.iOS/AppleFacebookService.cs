@@ -2,7 +2,9 @@ using System.Threading.Tasks;
 using Facebook.CoreKit;
 using Facebook.LoginKit;
 using Foundation;
+using Rigio.Data;
 using Rigio.iOS;
+using Rigio.Models;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
 

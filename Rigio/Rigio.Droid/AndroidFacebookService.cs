@@ -5,9 +5,12 @@ using Android.OS;
 using Android.Runtime;
 using Rigio.Droid;
 using Org.Json;
+using Rigio.Data;
+using Rigio.Models;
 using Xamarin.Facebook;
 using Xamarin.Facebook.Login;
 using Xamarin.Forms;
+using LoginResult = Rigio.Models.LoginResult;
 
 [assembly: Dependency(typeof(AndroidFacebookService))]
 namespace Rigio.Droid

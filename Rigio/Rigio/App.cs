@@ -1,4 +1,5 @@
 ﻿using System;
+using Rigio.Views;
 using Xamarin.Forms;
 
 namespace Rigio

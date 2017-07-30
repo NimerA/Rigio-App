@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
+using Rigio.Models;
 
-namespace Rigio
+namespace Rigio.Data
 {
     public interface IFacebookService
     {

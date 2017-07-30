@@ -18,9 +18,9 @@
 	<key>MinimumOSVersion</key>
 	<string>7.0</string>
 	<key>CFBundleDisplayName</key>
-	<string>Binwell Login</string>
+	<string>Rigio Login</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.binwell.login</string>
+	<string>com.Rigio.Login</string>
 	<key>CFBundleVersion</key>
 	<string>0.1</string>
 	<key>CFBundleIconFiles</key>
@@ -55,9 +55,9 @@
   </dict>
 </array>
 <key>FacebookAppID</key>
-<string>1102463466549096</string>
+<string>841549236010978</string>
 <key>FacebookDisplayName</key>
-<string>Binwell Social Demo</string>
+<string>Rigio Login</string>
 <key>LSApplicationQueriesSchemes</key>
 <array>
   <string>fbapi</string>

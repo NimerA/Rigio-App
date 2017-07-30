@@ -36,9 +36,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="App.cs" />
-    <Compile Include="IFacebookService.cs" />
-    <Compile Include="LoginPage.cs" />
-    <Compile Include="LoginResult.cs" />
+    <Compile Include="Data\IFacebookService.cs" />
+    <Compile Include="Views\LoginPage.cs" />
+    <Compile Include="Models\LoginResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

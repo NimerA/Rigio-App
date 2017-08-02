@@ -3,13 +3,13 @@ using Facebook.CoreKit;
 using Facebook.LoginKit;
 using Foundation;
 using Rigio.Data;
-using Rigio.iOS;
+using Rigio.iOS.Dependencies;
 using Rigio.Models;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
 
 [assembly: Dependency(typeof(AppleFacebookService))]
-namespace Rigio.iOS
+namespace Rigio.iOS.Dependencies
 {
     public class AppleFacebookService: IFacebookService
     {

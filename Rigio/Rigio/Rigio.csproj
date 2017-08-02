@@ -37,6 +37,7 @@
   <ItemGroup>
     <Compile Include="App.cs" />
     <Compile Include="Data\IFacebookService.cs" />
+    <Compile Include="Renderers\FacebookButton.cs" />
     <Compile Include="Views\LoginPage.cs" />
     <Compile Include="Models\LoginResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

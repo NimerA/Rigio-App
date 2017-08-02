@@ -102,9 +102,10 @@
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="AppleFacebookService.cs" />
+    <Compile Include="Dependencies\AppleFacebookService.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
+    <Compile Include="Renderers\FacebookButtonRenderer.cs" />
     <Compile Include="Utils.cs" />
     <None Include="Entitlements.plist" />
     <None Include="Info.plist">

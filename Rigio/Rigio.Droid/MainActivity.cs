@@ -2,6 +2,7 @@
 using Android.Content;
 using Android.Content.PM;
 using Android.OS;
+using Rigio.Droid.Dependencies;
 using Xamarin.Facebook;
 using Xamarin.Facebook.AppEvents;
 using Xamarin.Forms;

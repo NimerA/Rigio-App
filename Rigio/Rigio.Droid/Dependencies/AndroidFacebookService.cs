@@ -3,9 +3,9 @@ using Android.App;
 using Android.Content;
 using Android.OS;
 using Android.Runtime;
-using Rigio.Droid;
 using Org.Json;
 using Rigio.Data;
+using Rigio.Droid.Dependencies;
 using Rigio.Models;
 using Xamarin.Facebook;
 using Xamarin.Facebook.Login;
@@ -13,7 +13,7 @@ using Xamarin.Forms;
 using LoginResult = Rigio.Models.LoginResult;
 
 [assembly: Dependency(typeof(AndroidFacebookService))]
-namespace Rigio.Droid
+namespace Rigio.Droid.Dependencies
 {
     public class AndroidFacebookService: Java.Lang.Object, IFacebookService, GraphRequest.IGraphJSONObjectCallback, GraphRequest.ICallback, IFacebookCallback
     {

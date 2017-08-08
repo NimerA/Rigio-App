@@ -34,7 +34,7 @@ namespace Rigio.Views
             var providers = new[] { "Facebook"};
             foreach (var provider in providers)
             {
-                var loginButton = new FacebookButton
+                var loginButton = new Button
                 {
                     HorizontalOptions = LayoutOptions.Center,
                     Text = $"Login {provider}",
@@ -68,6 +68,9 @@ namespace Rigio.Views
                     btn.IsEnabled = true;
                     btn.Text = $"Login {btn.AutomationId}";
                 }
+
+          
+                Application.Current.MainPage = new NavigationPage(new MainPage());
             }
             else
             {
@@ -92,6 +95,10 @@ namespace Rigio.Views
                         senderBtn.Text = $"Logout {senderBtn.AutomationId}";
                         
                         _isAuthenticated = true;
+                        //Application.Current.MainPage = new NavigationPage(new MainPage());
+                        await Navigation.PushAsync(new MainPage());
+                       
+                        Application.Current.MainPage = new NavigationPage(new MainPage());
                         break;
                     default:
                         _hintLabel.Text = "Failed: " + loginResult.ErrorString;

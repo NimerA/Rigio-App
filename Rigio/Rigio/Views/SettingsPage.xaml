@@ -6,6 +6,9 @@
     <ContentPage.Content>
         <StackLayout>
             <Label Text="Welcome to Xamarin Forms!" />
+            <Button Text="Logout"
+                    HorizontalOptions="Center"
+                    VerticalOptions="CenterAndExpand" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

@@ -6,7 +6,8 @@ namespace Rigio
 {
     public class App : Application
     {
-		public App()
+     
+        public App()
 		{
 			MainPage = new NavigationPage(new LoginPage());
         }

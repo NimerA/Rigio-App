@@ -107,6 +107,7 @@
     <Compile Include="AppDelegate.cs" />
     <Compile Include="Renderers\FacebookButtonRenderer.cs" />
     <Compile Include="Utils.cs" />
+    <None Include="app.config" />
     <None Include="Entitlements.plist" />
     <None Include="Info.plist">
       <SubType>Designer</SubType>

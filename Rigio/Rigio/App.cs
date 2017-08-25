@@ -1,15 +1,22 @@
 ﻿using System;
+using Rigio.Data;
 using Rigio.Views;
 using Xamarin.Forms;
+using Rigio.Models;
 
 namespace Rigio
 {
     public class App : Application
     {
-     
+
+        public static AccountManager AccountManager { get; private set; }
+        public static Account Account { get; private set; }
+
         public App()
 		{
-			MainPage = new NavigationPage(new LoginPage());
+		    AccountManager = new AccountManager(new AccountService());
+            Account = new Account();
+            MainPage = new NavigationPage(new LoginPage());
         }
 
         protected override void OnStart()

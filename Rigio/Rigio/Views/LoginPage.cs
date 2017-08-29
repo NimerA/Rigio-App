@@ -94,18 +94,22 @@ namespace Rigio.Views
                         _hintLabel.Text = $"Hi {loginResult.FirstName}! Your email is {loginResult.Email}";
                         senderBtn.Text = $"Logout {senderBtn.AutomationId}";
 
-                        Account account = await App.AccountManager.GetAccountAsync(loginResult.Token);
+                        var account = await App.AccountManager.GetAccountAsync(loginResult.Token);
 
                         if (account != null)
                         {
                             App.Account.Access_Token = account.Access_Token;
                             App.Account.UserId = account.UserId;
+
+                            _isAuthenticated = true;
+
+                            Application.Current.MainPage = new NavigationPage(new MainPage());
+                        }
+                        else
+                        {
+                            _isAuthenticated = false;
                         }
 
-                        _isAuthenticated = true;
-                      
-                        Application.Current.MainPage = new NavigationPage(new MainPage());
-                        
                         break;
                     default:
                         _hintLabel.Text = "Failed: " + loginResult.ErrorString;

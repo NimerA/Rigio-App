@@ -79,6 +79,7 @@ namespace Rigio.Views
                 _hintLabel.Text = "Login. Please wait";
                 var loginResult = await Login(senderBtn.AutomationId);
 
+
                 foreach (var btn in _loginButtons.Where(b => b != senderBtn))
                     btn.IsEnabled = false;
 
@@ -92,11 +93,23 @@ namespace Rigio.Views
                     case LoginState.Success:
                         _hintLabel.Text = $"Hi {loginResult.FirstName}! Your email is {loginResult.Email}";
                         senderBtn.Text = $"Logout {senderBtn.AutomationId}";
-                        
-                        _isAuthenticated = true;
-                      
-                        Application.Current.MainPage = new NavigationPage(new MainPage());
-                        
+
+                        var account = await App.AccountManager.GetAccountAsync(loginResult.Token);
+
+                        if (account != null)
+                        {
+                            App.Account.Access_Token = account.Access_Token;
+                            App.Account.UserId = account.UserId;
+
+                            _isAuthenticated = true;
+
+                            Application.Current.MainPage = new NavigationPage(new MainPage());
+                        }
+                        else
+                        {
+                            _isAuthenticated = false;
+                        }
+
                         break;
                     default:
                         _hintLabel.Text = "Failed: " + loginResult.ErrorString;

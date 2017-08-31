@@ -7,6 +7,6 @@ namespace Rigio.Data
     public interface IAccountService
     {
         Task<Account> GetAccountsAsync(string token);
-        Task Logout(Account account);
+        Task Logout();
     }
 }

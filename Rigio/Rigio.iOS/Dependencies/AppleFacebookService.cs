@@ -14,7 +14,7 @@ namespace Rigio.iOS.Dependencies
     public class AppleFacebookService: IFacebookService
     {
         readonly LoginManager _loginManager = new LoginManager();
-        readonly string[] _permissions = { @"public_profile", @"email", @"user_about_me" };
+        readonly string[] _permissions = { @"public_profile" };
 
         LoginResult _loginResult;
         TaskCompletionSource<LoginResult> _completionSource;

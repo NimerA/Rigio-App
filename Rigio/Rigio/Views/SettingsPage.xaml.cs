@@ -16,5 +16,12 @@ namespace Rigio.Views
         {
             InitializeComponent();
         }
+
+        private void Button_OnClicked(object sender, EventArgs e)
+        {
+            App.AccountManager.Logout();
+
+            Navigation.PopAsync();
+        }
     }
 }

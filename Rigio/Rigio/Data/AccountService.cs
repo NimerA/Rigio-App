@@ -21,7 +21,7 @@ namespace Rigio.Data
         public async Task<Account> GetAccountsAsync(string token)
         {
             //var restUrl = "http://localhost:3000/auth/facebook-token/callback?access_token=" + token;
-            var restUrl = "http://192.168.0.7:3000/auth/facebook-token/callback?access_token=" + token;
+            var restUrl = "http://172.16.165.21:3000/auth/facebook-token/callback?access_token=" + token;
 
             Uri = new Uri(string.Format(restUrl, string.Empty));
 
@@ -43,9 +43,32 @@ namespace Rigio.Data
             return account;
         }
 
-        public async Task Logout(Account account)
+        public async Task Logout()
         {
-            throw new NotImplementedException();
+            // throw new NotImplementedException();
+            // http://localhost:3000/api/users/logout?access_token=FQjfxlD2MytqwEknn7Z6nhCPBQkCepFDgJGlrVeilJd0xYYrsr3PGN6yEZpDPhXx
+
+            var restUrl = "http://172.16.165.21:3000/auth/facebook-token/callback?access_token=" +
+                          App.Account.Access_Token;
+
+            Uri = new Uri(string.Format(restUrl, string.Empty));
+
+            try
+            {
+                var response = await _client.PostAsync(Uri,null);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var content = await response.Content.ReadAsStringAsync();
+                    // = JsonConvert.DeserializeObject<Account>(content);
+                    Debug.WriteLine(@"ERROR {0}", content);
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(@"ERROR {0}", ex.Message);
+            }
+
         }
     }
 }

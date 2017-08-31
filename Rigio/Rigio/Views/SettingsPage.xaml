@@ -8,7 +8,7 @@
             <Label Text="Welcome to Xamarin Forms!" />
             <Button Text="Logout"
                     HorizontalOptions="Center"
-                    VerticalOptions="CenterAndExpand" />
+                    VerticalOptions="CenterAndExpand" Clicked="Button_OnClicked"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

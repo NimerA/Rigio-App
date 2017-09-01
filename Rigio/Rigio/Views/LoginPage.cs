@@ -106,6 +106,7 @@ namespace Rigio.Views
                         }
                         else
                         {
+                            _hintLabel.Text = "Failed try again";
                             foreach (var btn in _loginButtons.Where(b => b != senderBtn))
                                 btn.IsEnabled = true;
                            // _isAuthenticated = false;

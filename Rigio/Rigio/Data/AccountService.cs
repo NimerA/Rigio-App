@@ -66,7 +66,7 @@ namespace Rigio.Data
             {
                 Debug.WriteLine(@"ERROR {0}", ex.Message);
             }
-
+            return false;
         }
     }
 }

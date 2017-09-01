@@ -47,7 +47,7 @@ namespace Rigio.Data
 
         public async Task Logout()
         {
-           var restUrl = baseUrl + "auth/facebook-token/callback?access_token=" + App.Account.Access_Token;
+           var restUrl = baseUrl + "api/users/logout?access_token=" + App.Account.Access_Token;
 
             Uri = new Uri(string.Format(restUrl, string.Empty));
 

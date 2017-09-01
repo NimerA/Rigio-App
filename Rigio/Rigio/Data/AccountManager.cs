@@ -21,7 +21,7 @@ namespace Rigio.Data
             return _accountService.GetAccountsAsync(token);
         }
 
-        public Task Logout()
+        public Task<bool> Logout()
         {
             return _accountService.Logout();
         }

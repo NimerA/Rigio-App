@@ -12,11 +12,19 @@ namespace Rigio.Views
             InitializeComponent();
         }
 
-        private void Button_OnClicked(object sender, EventArgs e)
+        private async void Button_OnClicked(object sender, EventArgs e)
         {
-            App.AccountManager.Logout();
+            var respnse = await App.AccountManager.Logout();
 
-            Application.Current.MainPage = new NavigationPage(new LoginPage());
+            if (respnse)
+            {
+                Application.Current.MainPage = new NavigationPage(new LoginPage());
+            }
+            else
+            {
+                await DisplayAlert("Error", "Ha ocurrido un error","Ok");
+            }
+            
         }
     }
 }

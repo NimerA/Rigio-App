@@ -45,7 +45,7 @@ namespace Rigio.Data
             return account;
         }
 
-        public async Task Logout()
+        public async Task<bool> Logout()
         {
            var restUrl = baseUrl + "api/users/logout?access_token=" + App.Account.Access_Token;
 
@@ -57,10 +57,10 @@ namespace Rigio.Data
 
                 if (response.IsSuccessStatusCode)
                 {
-                    var content = await response.Content.ReadAsStringAsync();
-                    // = JsonConvert.DeserializeObject<Account>(content);
-                    Debug.WriteLine(@"ERROR {0}", content);
+                    return true;
                 }
+
+                return false;
             }
             catch (Exception ex)
             {

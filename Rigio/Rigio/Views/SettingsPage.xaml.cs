@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -15,6 +10,21 @@ namespace Rigio.Views
         public SettingsPage()
         {
             InitializeComponent();
+        }
+
+        private async void Button_OnClicked(object sender, EventArgs e)
+        {
+            var respnse = await App.AccountManager.Logout();
+
+            if (respnse)
+            {
+                Application.Current.MainPage = new NavigationPage(new LoginPage());
+            }
+            else
+            {
+                await DisplayAlert("Error", "Ha ocurrido un error","Ok");
+            }
+            
         }
     }
 }

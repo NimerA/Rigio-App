@@ -13,15 +13,17 @@ namespace Rigio.Data
     
         public Uri Uri { get; set; }
 
+        private string baseUrl { get; set; }
+
         public AccountService()
         {
+            baseUrl =  "http://localhost:3000/"; ;
             _client = new HttpClient { MaxResponseContentBufferSize = 256000 };
         }
 
         public async Task<Account> GetAccountsAsync(string token)
         {
-            //var restUrl = "http://localhost:3000/auth/facebook-token/callback?access_token=" + token;
-            var restUrl = "http://192.168.0.7:3000/auth/facebook-token/callback?access_token=" + token;
+            var restUrl = baseUrl+"auth/facebook-token/callback?access_token=" + token;
 
             Uri = new Uri(string.Format(restUrl, string.Empty));
 
@@ -43,9 +45,28 @@ namespace Rigio.Data
             return account;
         }
 
-        public async Task Logout(Account account)
+        public async Task<bool> Logout()
         {
-            throw new NotImplementedException();
+           var restUrl = baseUrl + "api/users/logout?access_token=" + App.Account.Access_Token;
+
+            Uri = new Uri(string.Format(restUrl, string.Empty));
+
+            try
+            {
+                var response = await _client.PostAsync(Uri,null);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    return true;
+                }
+
+                return false;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(@"ERROR {0}", ex.Message);
+            }
+            return false;
         }
     }
 }

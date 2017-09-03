@@ -42,6 +42,7 @@
     <Compile Include="Data\IFacebookService.cs" />
     <Compile Include="Models\Account.cs" />
     <Compile Include="Renderers\FacebookButton.cs" />
+    <Compile Include="Renderers\FloatingActionButtonView.cs" />
     <Compile Include="Views\HomePage.xaml.cs">
       <DependentUpon>HomePage.xaml</DependentUpon>
     </Compile>

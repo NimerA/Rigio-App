@@ -35,5 +35,20 @@ namespace Rigio.Data
         {
             return _accountService.createMatch(match);
         }
+
+		public Task<bool> DeleteMatch(int id)
+		{
+            return _accountService.deleteMatchById(id);
+		}
+
+        public Task<Match> GetMatchById(int id)
+		{
+            return _accountService.getMatchById(id);
+		}
+
+		public Task<bool> PatchMatch(Match match)
+		{
+            return _accountService.patchMatch(match);
+		}
     }
 }

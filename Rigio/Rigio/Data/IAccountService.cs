@@ -12,8 +12,8 @@ namespace Rigio.Data
         Task<List<Match>> getMatches();
         Task<bool> createMatch(Match match);
         Task<Match> getMatchById(int id);
-        Task patchMatch(Match match);
-        Task deleteMatchById(int id);
+        Task<bool> patchMatch(Match match);
+        Task<bool> deleteMatchById(int id);
 
         Task<Invitation> getInvitationSent();
         Task<Invitation> getInvitationRecieved();

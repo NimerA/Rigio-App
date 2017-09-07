@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Rigio.Data.Wrapper
+namespace Rigio.Models
 {
-    class FootballFieldWrapper
+    class FootballField
     {
     }
 }

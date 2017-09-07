@@ -25,5 +25,10 @@ namespace Rigio.Data
         {
             return _accountService.Logout();
         }
+
+        public Task<List<Match>> GetMatches()
+        {
+            return _accountService.getMatches();
+        }
     }
 }

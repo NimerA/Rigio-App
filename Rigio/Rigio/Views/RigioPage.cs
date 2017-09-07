@@ -14,12 +14,12 @@ namespace Rigio.Views
         async void Button_OnClicked(object sender, EventArgs args)
         {
             Match match = new Match();
-            match.Name = "test";
-            match.Description = "desc";
+            match.Name = "test2";
+            match.Description = "desc2";
             match.MaxPlayers = 5;
-            //match.Date = "2017-09-02T22:49:14.701Z";
+            match.Date = "2017-09-02T22:49:14.701Z";
             
-            var response = await App.AccountManager.GetMatches();
+            var response = await App.AccountManager.PostMatch(match);
             Debug.WriteLine(response);
         }
     }

@@ -55,10 +55,18 @@ namespace Rigio.Data
             string json = JsonConvert.SerializeObject(match, 
                 new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }
             );
+            Debug.WriteLine(json.ToString());
             var content = new StringContent(json, Encoding.UTF8, "application/json");
 
-            var response = await _client.PostAsync(getMatchUrl(), content);
-            var success = response.IsSuccessStatusCode;
+            var success = false;
+            try
+            {
+                var response = await _client.PostAsync(getMatchUrl(), content);
+                success = response.IsSuccessStatusCode;
+            }catch(Exception e)
+            {
+                Debug.WriteLine(e);
+            }
             return success;
         }
     }

@@ -90,5 +90,10 @@ namespace Rigio.Data
         {
             throw new NotImplementedException();
         }
+
+        public Task<User> getUsers()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

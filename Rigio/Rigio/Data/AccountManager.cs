@@ -30,5 +30,10 @@ namespace Rigio.Data
         {
             return _accountService.getMatches();
         }
+
+        public Task<bool> PostMatch(Match match)
+        {
+            return _accountService.createMatch(match);
+        }
     }
 }

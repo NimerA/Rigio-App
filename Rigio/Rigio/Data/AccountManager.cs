@@ -25,11 +25,11 @@ namespace Rigio.Data
         public Task<Match> GetMatchById(int id) { return _accountService.getMatchById(id); }
 		public Task<bool> PatchMatch(Match match) { return _accountService.patchMatch(match); }
 
-        Task<List<Invitation>> getInvitationSent() { return _accountService.getInvitationSent(); }
-        Task<List<Invitation>> getInvitationRecieved() { return _accountService.getInvitationRecieved();  }
-        Task<bool> createInvitation(Invitation invitation) { return _accountService.createInvitation(invitation); }
-        Task<Invitation> getInvitationById(int id) { return _accountService.getInvitationById(id); }
-        Task<bool> patchInvitation(Invitation invitation) { return _accountService.patchInvitation(invitation); }
-        Task<bool> deleteInvitationById(int id) { return _accountService.deleteInvitationById(id); }
+        public Task<List<Invitation>> getInvitationSent() { return _accountService.getInvitationSent(); }
+        public Task<List<Invitation>> getInvitationRecieved() { return _accountService.getInvitationRecieved();  }
+        public Task<bool> createInvitation(Invitation invitation) { return _accountService.createInvitation(invitation); }
+        public Task<Invitation> getInvitationById(int id) { return _accountService.getInvitationById(id); }
+        public Task<bool> patchInvitation(Invitation invitation) { return _accountService.patchInvitation(invitation); }
+        public Task<bool> deleteInvitationById(int id) { return _accountService.deleteInvitationById(id); }
     }
 }

@@ -38,9 +38,15 @@
     <Compile Include="App.cs" />
     <Compile Include="Data\AccountManager.cs" />
     <Compile Include="Data\AccountService.cs" />
+    <Compile Include="Data\InvitationServices.cs" />
+    <Compile Include="Data\MatchService.cs" />
     <Compile Include="Data\IAccountService.cs" />
     <Compile Include="Data\IFacebookService.cs" />
     <Compile Include="Models\Account.cs" />
+    <Compile Include="Models\FootballField.cs" />
+    <Compile Include="Models\Invitation.cs" />
+    <Compile Include="Models\Match.cs" />
+    <Compile Include="Models\User.cs" />
     <Compile Include="Renderers\FacebookButton.cs" />
     <Compile Include="Renderers\FloatingActionButtonView.cs" />
     <Compile Include="Views\Rigios\CreateRigioView.xaml.cs">
@@ -55,6 +61,7 @@
     <Compile Include="Views\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\RigioPage.cs" />
     <Compile Include="Views\RigioPage.xaml.cs">
       <DependentUpon>RigioPage.xaml</DependentUpon>
     </Compile>

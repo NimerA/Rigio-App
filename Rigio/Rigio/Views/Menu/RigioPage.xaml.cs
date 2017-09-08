@@ -19,7 +19,7 @@ namespace Rigio.Views.Menu
             InitializeComponent();
 
             lvRigios.ItemTemplate = new DataTemplate(typeof(RigioCell));
-
+           
             _ScrollView = new ScrollView
             {
                 
@@ -78,7 +78,7 @@ namespace Rigio.Views.Menu
                 {
                     NavigationPage.SetBackButtonTitle(this, "Back");
 
-                    await Navigation.PushAsync(new Rigios.CreateRigioView());
+                    await Navigation.PushAsync(new CreateRigioView());
                 };
 
                 ToolbarItems.Add(addButton);
@@ -96,7 +96,7 @@ namespace Rigio.Views.Menu
                 {
                     NavigationPage.SetBackButtonTitle(this, "Back");
 
-                    await Navigation.PushAsync(new Rigios.CreateRigioView());
+                    await Navigation.PushAsync(new CreateRigioView());
                 };
             }
         }

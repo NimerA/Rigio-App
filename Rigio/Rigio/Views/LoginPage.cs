@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Rigio.Data;
 using Rigio.Models;
+using Rigio.Renderers;
 using Xamarin.Forms;
 
 namespace Rigio.Views
@@ -90,8 +91,6 @@ namespace Rigio.Views
                             btn.IsEnabled = true;
                         break;
                     case LoginState.Success:
-                        //_hintLabel.Text = $"Hi {loginResult.FirstName}! Your email is {loginResult.Email}";
-                        //senderBtn.Text = $"Logout {senderBtn.AutomationId}";
                         var account = await App.AccountManager.GetAccountAsync(loginResult.Token);
 
                         if (account != null)
@@ -108,7 +107,6 @@ namespace Rigio.Views
                             _hintLabel.Text = "Failed try again";
                             foreach (var btn in _loginButtons.Where(b => b != senderBtn))
                                 btn.IsEnabled = true;
-                           // _isAuthenticated = false;
                         }
 
                         break;

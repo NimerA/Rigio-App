@@ -1,5 +1,6 @@
 ﻿using System;
 using Rigio.Renderers;
+using Rigio.Views.Rigios;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -8,6 +9,8 @@ namespace Rigio.Views.Menu
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class RigioPage : ContentPage
     {
+        ListView lvRigios = new ListView();
+
         public RigioPage()
         {
             FloatingActionButtonView _Fab;
@@ -15,14 +18,17 @@ namespace Rigio.Views.Menu
 
             InitializeComponent();
 
+            lvRigios.ItemTemplate = new DataTemplate(typeof(RigioCell));
+
             _ScrollView = new ScrollView
             {
+                
                 Content = new StackLayout
                 {
                     Spacing = 0,
                     Children =
                     {
-                       
+                        lvRigios
                     }
                 }
             };
@@ -72,14 +78,7 @@ namespace Rigio.Views.Menu
                 {
                     NavigationPage.SetBackButtonTitle(this, "Back");
 
-                    await Navigation.PushAsync(
-                        new Rigios.CreateRigioView()
-                        {
-                            //BindingContext = new OrderDetailViewModel(ViewModel.Account)
-                            //{
-                            //    Navigation = ViewModel.Navigation
-                            //}
-                        });
+                    await Navigation.PushAsync(new Rigios.CreateRigioView());
                 };
 
                 ToolbarItems.Add(addButton);
@@ -93,20 +92,20 @@ namespace Rigio.Views.Menu
         {
             get
             {
-                return new Action<object, EventArgs>(async (o, e) =>
+                return async (o, e) =>
                 {
                     NavigationPage.SetBackButtonTitle(this, "Back");
 
-                    await Navigation.PushAsync(
-                        new Rigios.CreateRigioView()
-                        {
-                            //BindingContext = new OrderDetailViewModel(ViewModel.Account)
-                            //{
-                            //    Navigation = ViewModel.Navigation
-                            //}
-                        });
-                });
+                    await Navigation.PushAsync(new Rigios.CreateRigioView());
+                };
             }
+        }
+
+        protected override async void OnAppearing()
+        {
+            base.OnAppearing();
+
+            lvRigios.ItemsSource = await App.AccountManager.GetMatches();
         }
     }
 }

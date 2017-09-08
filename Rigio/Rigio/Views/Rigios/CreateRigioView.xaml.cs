@@ -24,7 +24,7 @@ namespace Rigio.Views.Rigios
         {
             ToolbarItems.Clear();
 
-            ToolbarItem saveToolBarItem = new ToolbarItem
+            var saveToolBarItem = new ToolbarItem
             {
                 Text = "Guardar",
                 Icon = "save.png"
@@ -58,7 +58,7 @@ namespace Rigio.Views.Rigios
                 return;
             }
                
-            await DisplayAlert("Rigio", "Guardado exitosamente", "Ok");
+            //await DisplayAlert("Rigio", "Guardado exitosamente", "Ok");
             await Navigation.PopAsync();
         }
     }

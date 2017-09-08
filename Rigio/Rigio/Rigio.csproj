@@ -61,13 +61,13 @@
     <Compile Include="Views\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\RigioPage.cs" />
     <Compile Include="Views\Menu\RigioPage.xaml.cs">
       <DependentUpon>RigioPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Menu\SettingsPage.xaml.cs">
       <DependentUpon>SettingsPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Rigios\RigioCell.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">

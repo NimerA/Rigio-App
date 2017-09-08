@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Rigio.Data;
 using Rigio.Models;
-using Rigio.Renderers;
 using Xamarin.Forms;
 
 namespace Rigio.Views

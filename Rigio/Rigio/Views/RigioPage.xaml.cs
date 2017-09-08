@@ -1,4 +1,5 @@
-﻿using Rigio.Renderers;
+﻿using System;
+using Rigio.Renderers;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -27,14 +28,16 @@ namespace Rigio.Views
             };
 
             #region compose view hierarchy
-            if (Device.OS == TargetPlatform.Android)
+            if (Device.RuntimePlatform.Equals("Android"))
             {
                 _Fab = new FloatingActionButtonView
                 {
                     ImageName = "fab_add.png",
                     ColorNormal = Color.FromHex("53BA9D"),
                     ColorPressed = Color.FromHex("42947D"),
-                    ColorRipple = Color.FromHex("53BA9D")
+                    ColorRipple = Color.FromHex("53BA9D"),
+
+                    Clicked = NavigateToCreateMatch
                 };
 
                 var absolute = new AbsoluteLayout
@@ -70,6 +73,26 @@ namespace Rigio.Views
                 Content = _ScrollView;
             }
             #endregion
+        }
+
+        Action<object, EventArgs> NavigateToCreateMatch
+        {
+            get
+            {
+                return new Action<object, EventArgs>(async (o, e) =>
+                {
+                    NavigationPage.SetBackButtonTitle(this, "Back");
+
+                    await Navigation.PushAsync(
+                        new Rigios.CreateRigioView()
+                        {
+                            //BindingContext = new OrderDetailViewModel(ViewModel.Account)
+                            //{
+                            //    Navigation = ViewModel.Navigation
+                            //}
+                        });
+                });
+            }
         }
     }
 }

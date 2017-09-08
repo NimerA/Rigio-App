@@ -7,31 +7,30 @@ using Rigio.Models;
 
 namespace Rigio.Data
 {
-    public partial class AccountService : IAccountService
+    public class AccountService : IAccountService
     {
-        private string baseUrl;
-        private static string apiUrl;
         private readonly HttpClient _client;
+    
+        public Uri Uri { get; set; }
+
+        private string baseUrl { get; set; }
 
         public AccountService()
         {
-            baseUrl = "http://192.168.1.107:3000/";
-            apiUrl = baseUrl + "api/";
+            baseUrl =  "http://localhost:3000/"; ;
             _client = new HttpClient { MaxResponseContentBufferSize = 256000 };
-        }
-
-        string getAccessTokenUrl()
-        {
-            return "?access_token=" + App.Account.Access_Token;
         }
 
         public async Task<Account> GetAccountsAsync(string token)
         {
+            var restUrl = baseUrl+"auth/facebook-token/callback?access_token=" + token;
+
+            Uri = new Uri(string.Format(restUrl, string.Empty));
+
             Account account = null;
             try
             {
-                var restUrl = baseUrl + "auth/facebook-token/callback?access_token=" + token;
-                var response = await _client.GetAsync(restUrl);
+                var response = await _client.GetAsync(Uri);
                 if (response.IsSuccessStatusCode)
                 {
                     var content = await response.Content.ReadAsStringAsync();
@@ -48,22 +47,26 @@ namespace Rigio.Data
 
         public async Task<bool> Logout()
         {
+           var restUrl = baseUrl + "api/users/logout?access_token=" + App.Account.Access_Token;
+
+            Uri = new Uri(string.Format(restUrl, string.Empty));
+
             try
             {
-                var restUrl = apiUrl + "users/logout" + getAccessTokenUrl();
-                var response = await _client.PostAsync(restUrl, null);
-                return response.IsSuccessStatusCode;
+                var response = await _client.PostAsync(Uri,null);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    return true;
+                }
+
+                return false;
             }
             catch (Exception ex)
             {
                 Debug.WriteLine(@"ERROR {0}", ex.Message);
             }
             return false;
-        }
-
-        public Task<User> getUsers()
-        {
-            throw new NotImplementedException();
         }
     }
 }

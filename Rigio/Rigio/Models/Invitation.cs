@@ -8,10 +8,11 @@ namespace Rigio.Models
 {
     public class Invitation
     {
-        public int Status { get; set; }
-        int number { get; set; }
-        int HostId { get; set; }
-        int InviteeId { get; set; }
-        int MatchId { get; set; }
+        public int? Status { get; set; }
+        public int? number { get; set; }
+        public int? HostId { get; set; }
+        public int? InviteeId { get; set; }
+        public int? MatchId { get; set; }
+        public int? id { get; set; }
     }
 }

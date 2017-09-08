@@ -16,6 +16,7 @@ namespace Rigio.Data
         public AccountService()
         {
             baseUrl = "http://172.16.11.22:3000/";
+
             apiUrl = baseUrl + "api/";
             _client = new HttpClient { MaxResponseContentBufferSize = 256000 };
         }

@@ -3,7 +3,7 @@ using Rigio.Renderers;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace Rigio.Views
+namespace Rigio.Views.Menu
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class RigioPage : ContentPage
@@ -61,14 +61,28 @@ namespace Rigio.Views
             }
             else
             {
-                var syncButton = new ToolbarItem
+                var addButton = new ToolbarItem
                 {
                     Text = "Add",
                     Icon = "add_ios_gray",
                     //Order = ToolbarItemOrder.Primary
                 };
 
-                ToolbarItems.Add(syncButton);
+                addButton.Clicked += async (sender, args) =>
+                {
+                    NavigationPage.SetBackButtonTitle(this, "Back");
+
+                    await Navigation.PushAsync(
+                        new Rigios.CreateRigioView()
+                        {
+                            //BindingContext = new OrderDetailViewModel(ViewModel.Account)
+                            //{
+                            //    Navigation = ViewModel.Navigation
+                            //}
+                        });
+                };
+
+                ToolbarItems.Add(addButton);
 
                 Content = _ScrollView;
             }

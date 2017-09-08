@@ -4,8 +4,34 @@
              x:Class="Rigio.Views.Rigios.CreateRigioView"
              Title=" Crear Rigio">
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin Forms!" />
-        </StackLayout>
+        <ScrollView>
+            <StackLayout Spacing="1" Padding="3">
+                <StackLayout Orientation="Horizontal">
+                    <Label FontSize="14" Text="Nombre:" 
+                           HorizontalOptions="Start" VerticalOptions="Center" WidthRequest="100" FontAttributes="Bold" />
+                    <Entry x:Name="NameEntry" HorizontalOptions="FillAndExpand" /> 
+                </StackLayout>
+                <StackLayout Orientation="Horizontal">
+                    <Label FontSize="14" Text="Descripción:" 
+                           HorizontalOptions="Start" VerticalOptions="Center" WidthRequest="100" FontAttributes="Bold" />
+                    <Entry x:Name="DescriptionEntry" HorizontalOptions="FillAndExpand"  />
+                </StackLayout>
+                <StackLayout Orientation="Horizontal">
+                    <Label FontSize="14" Text="Max. Jugadores:" 
+                           HorizontalOptions="Start" VerticalOptions="Center" WidthRequest="100" FontAttributes="Bold" />
+                    <Entry x:Name="PlayersEntry" HorizontalOptions="FillAndExpand" Keyboard="Numeric"/>
+                </StackLayout>
+                <StackLayout Orientation="Horizontal">
+                    <Label FontSize="14" Text="Fecha:" 
+                           HorizontalOptions="Start" VerticalOptions="Center" WidthRequest="100" FontAttributes="Bold" />
+                    <DatePicker x:Name="DateEntry" HorizontalOptions="FillAndExpand" Format="D"/>
+                </StackLayout>
+                <StackLayout Orientation="Horizontal">
+                    <Label FontSize="14" Text="Hora:" 
+                           HorizontalOptions="Start" VerticalOptions="Center" WidthRequest="100" FontAttributes="Bold" />
+                    <TimePicker x:Name="TimeEntry" HorizontalOptions="FillAndExpand" />
+                </StackLayout>
+            </StackLayout>
+        </ScrollView>
     </ContentPage.Content>
 </ContentPage>

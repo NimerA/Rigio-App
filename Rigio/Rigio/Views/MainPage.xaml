@@ -2,9 +2,10 @@
 <TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:views="clr-namespace:Rigio.Views;assembly=Rigio"
+             xmlns:menu="clr-namespace:Rigio.Views.Menu;assembly=Rigio"
              x:Class="Rigio.Views.MainPage">
   <!--Pages can be added as references or inline-->
-    <views:HomePage />
-    <views:RigioPage />
-    <views:SettingsPage />
+    <menu:HomePage />
+    <menu:RigioPage />
+    <menu:SettingsPage />
 </TabbedPage>

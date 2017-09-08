@@ -6,9 +6,6 @@
     <ContentPage.Content>
         <StackLayout>
             <Label x:Name="valueLabel" Text="Welcome to Xamarin Forms!" />
-            <Button Text="Create Match"
-                    HorizontalOptions="Center"
-                    VerticalOptions="CenterAndExpand" Clicked="Button_OnClicked"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

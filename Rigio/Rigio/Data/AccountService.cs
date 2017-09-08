@@ -25,16 +25,6 @@ namespace Rigio.Data
             return "?access_token=" + App.Account.Access_Token;
         }
 
-        public Task createInvitation(Invitation invitation)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task deleteInvitationById(int id)
-        {
-            throw new NotImplementedException();
-        }
-
         public async Task<Account> GetAccountsAsync(string token)
         {
             Account account = null;
@@ -56,21 +46,6 @@ namespace Rigio.Data
             return account;
         }
 
-        public Task<Invitation> getInvitationById(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<Invitation> getInvitationRecieved()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<Invitation> getInvitationSent()
-        {
-            throw new NotImplementedException();
-        }
-
         public async Task<bool> Logout()
         {
             try
@@ -84,11 +59,6 @@ namespace Rigio.Data
                 Debug.WriteLine(@"ERROR {0}", ex.Message);
             }
             return false;
-        }
-
-        public Task patchInvitation(Invitation invitation)
-        {
-            throw new NotImplementedException();
         }
 
         public Task<User> getUsers()

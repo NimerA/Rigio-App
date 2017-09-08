@@ -14,13 +14,13 @@ namespace Rigio.Data
         Task<Match> getMatchById(int id);
         Task<bool> patchMatch(Match match);
         Task<bool> deleteMatchById(int id);
-
-        Task<Invitation> getInvitationSent();
-        Task<Invitation> getInvitationRecieved();
-        Task createInvitation(Invitation invitation);
+            
+        Task<List<Invitation>> getInvitationSent();
+        Task<List<Invitation>> getInvitationRecieved();
+        Task<bool> createInvitation(Invitation invitation);
         Task<Invitation> getInvitationById(int id);
-        Task patchInvitation(Invitation invitation);
-        Task deleteInvitationById(int id);
+        Task<bool> patchInvitation(Invitation invitation);
+        Task<bool> deleteInvitationById(int id);
 
         Task<User> getUsers();
     }

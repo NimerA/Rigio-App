@@ -1,5 +1,6 @@
 ﻿using Rigio.Models;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Rigio.Data
@@ -11,27 +12,27 @@ namespace Rigio.Data
             throw new NotImplementedException();
         }
 
-        public Task<Invitation> getInvitationRecieved()
+        public Task<List<Invitation>> getInvitationRecieved()
         {
             throw new NotImplementedException();
         }
 
-        public Task<Invitation> getInvitationSent()
+        public Task<List<Invitation>> getInvitationSent()
         {
             throw new NotImplementedException();
         }
 
-        public Task createInvitation(Invitation invitation)
+        public Task<bool> createInvitation(Invitation invitation)
         {
             throw new NotImplementedException();
         }
 
-        public Task deleteInvitationById(int id)
+        public Task<bool> deleteInvitationById(int id)
         {
             throw new NotImplementedException();
         }
 
-        public Task patchInvitation(Invitation invitation)
+        public Task<bool> patchInvitation(Invitation invitation)
         {
             throw new NotImplementedException();
         }

@@ -1,4 +1,5 @@
 ﻿using System;
+using Rigio.Models;
 using Rigio.Renderers;
 using Rigio.Views.Rigios;
 using Xamarin.Forms;
@@ -78,7 +79,7 @@ namespace Rigio.Views.Menu
                 {
                     NavigationPage.SetBackButtonTitle(this, "Back");
 
-                    await Navigation.PushAsync(new CreateRigioView());
+                    await Navigation.PushAsync(new CreateRigioView(new Match(), false));
                 };
 
                 ToolbarItems.Add(addButton);
@@ -96,7 +97,7 @@ namespace Rigio.Views.Menu
                 {
                     NavigationPage.SetBackButtonTitle(this, "Back");
 
-                    await Navigation.PushAsync(new CreateRigioView());
+                    await Navigation.PushAsync(new CreateRigioView(new Match(), false));
                 };
             }
         }

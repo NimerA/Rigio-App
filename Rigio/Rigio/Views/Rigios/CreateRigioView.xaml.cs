@@ -8,9 +8,19 @@ namespace Rigio.Views.Rigios
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class CreateRigioView : ContentPage
     {
-        public CreateRigioView()
+        private Match _rigio;
+        private bool _isEditing;
+        public CreateRigioView(Match rigio, bool isEditing)
         {
             InitializeComponent();
+
+            _rigio = rigio;
+            _isEditing = isEditing;
+
+            NameEntry.Text = _rigio.Name;
+            DescriptionEntry.Text = _rigio.Description;
+            PlayersEntry.Text = _rigio.MaxPlayers.ToString();
+          //  DateEntry.Date = 
         }
 
         protected override async void OnAppearing()
@@ -36,21 +46,24 @@ namespace Rigio.Views.Rigios
 
         private async void SaveToolBarItem_Clicked(object sender, EventArgs e)
         {
-            const string format = "yyyy-MM-dd HH:MM:ss";
-
             var date = DateEntry.Date;
             var combined  = date.Add(TimeEntry.Time);
 
-            var match = new Match
+            _rigio = new Match
             {
+                id = _rigio.id,
                 Name = NameEntry.Text,
                 Description = DescriptionEntry.Text,
                 MaxPlayers = Convert.ToInt32(PlayersEntry.Text),
                 CreatorId = Convert.ToInt32(App.Account.UserId),
-                Date = combined.ToString(format)
+                Date = combined.ToString()
             };
 
-            var response = await App.AccountManager.PostMatch(match);
+            bool response;
+            if (_isEditing)
+                response = await App.AccountManager.PatchMatch(_rigio);
+            else
+                response = await App.AccountManager.PostMatch(_rigio);
 
             if (!response)
             {

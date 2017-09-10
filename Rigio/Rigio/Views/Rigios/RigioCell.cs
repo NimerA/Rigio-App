@@ -69,11 +69,12 @@ namespace Rigio.Views.Rigios
                 VerticalOptions = LayoutOptions.Fill,
             };
 
-            var moreAction = new MenuItem { Text = "Editar" };
-            moreAction.SetBinding(MenuItem.CommandParameterProperty, new Binding("."));
-            moreAction.Clicked += async (sender, e) => {
-                var mi = ((MenuItem)sender);
-                Debug.WriteLine("Editar Context Action clicked: " + mi.CommandParameter);
+            var editAction = new MenuItem { Text = "Editar" };
+            editAction.SetBinding(MenuItem.CommandParameterProperty, new Binding("."));
+            editAction.Clicked += async (sender, e) => {
+                var mi = ((MenuItem)sender).CommandParameter as Match;
+
+                await Application.Current.MainPage.Navigation.PushAsync(new CreateRigioView(mi,true));
             };
 
             var deleteAction = new MenuItem { Text = "Borrar", IsDestructive = true }; // red background
@@ -88,11 +89,11 @@ namespace Rigio.Views.Rigios
                 var mi = ((MenuItem)sender).CommandParameter as Match;
                 await App.AccountManager.DeleteMatch((int)mi.id);
 
-                (Parent as ListView).ItemsSource = await App.AccountManager.GetMatches();
+                ((ListView) Parent).ItemsSource = await App.AccountManager.GetMatches();
 
             };
             // add to the ViewCell's ContextActions property
-            ContextActions.Add(moreAction);
+            ContextActions.Add(editAction);
             ContextActions.Add(deleteAction);
         }
     }

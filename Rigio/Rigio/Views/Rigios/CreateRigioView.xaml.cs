@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using Rigio.Models;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -9,7 +10,7 @@ namespace Rigio.Views.Rigios
     public partial class CreateRigioView : ContentPage
     {
         private Match _rigio;
-        private bool _isEditing;
+        private readonly bool _isEditing;
         public CreateRigioView(Match rigio, bool isEditing)
         {
             InitializeComponent();
@@ -20,7 +21,12 @@ namespace Rigio.Views.Rigios
             NameEntry.Text = _rigio.Name;
             DescriptionEntry.Text = _rigio.Description;
             PlayersEntry.Text = _rigio.MaxPlayers.ToString();
-          //  DateEntry.Date = 
+           
+            if (!isEditing) return;
+
+            var utcTime = DateTime.Parse(_rigio.Date);
+            DateEntry.Date = utcTime.Date;
+            TimeEntry.Time = utcTime.TimeOfDay;
         }
 
         protected override async void OnAppearing()
@@ -71,7 +77,6 @@ namespace Rigio.Views.Rigios
                 return;
             }
                
-            //await DisplayAlert("Rigio", "Guardado exitosamente", "Ok");
             await Navigation.PopAsync();
         }
     }

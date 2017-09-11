@@ -49,8 +49,10 @@
     <Compile Include="Models\User.cs" />
     <Compile Include="Renderers\FacebookButton.cs" />
     <Compile Include="Renderers\FloatingActionButtonView.cs" />
-    <Compile Include="Views\HomePage.cs" />
-    <Compile Include="Views\HomePage.xaml.cs">
+    <Compile Include="Views\Rigios\CreateRigioView.xaml.cs">
+      <DependentUpon>CreateRigioView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Menu\HomePage.xaml.cs">
       <DependentUpon>HomePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\LoginPage.cs" />
@@ -59,13 +61,13 @@
     <Compile Include="Views\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\RigioPage.cs" />
-    <Compile Include="Views\RigioPage.xaml.cs">
+    <Compile Include="Views\Menu\RigioPage.xaml.cs">
       <DependentUpon>RigioPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\SettingsPage.xaml.cs">
+    <Compile Include="Views\Menu\SettingsPage.xaml.cs">
       <DependentUpon>SettingsPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Rigios\RigioCell.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
@@ -101,19 +103,25 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\HomePage.xaml">
+    <EmbeddedResource Include="Views\Menu\HomePage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\RigioPage.xaml">
+    <EmbeddedResource Include="Views\Menu\RigioPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\SettingsPage.xaml">
+    <EmbeddedResource Include="Views\Menu\SettingsPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Rigios\CreateRigioView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>

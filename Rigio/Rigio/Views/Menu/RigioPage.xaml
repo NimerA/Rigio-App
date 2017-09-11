@@ -1,11 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Rigio.Views.RigioPage"
+             x:Class="Rigio.Views.Menu.RigioPage"
              Title="Rigios">
     <ContentPage.Content>
         <StackLayout>
-            <Label x:Name="valueLabel" Text="Welcome to Xamarin Forms!" />
+            
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

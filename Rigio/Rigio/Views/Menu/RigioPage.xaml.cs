@@ -1,12 +1,17 @@
-﻿using Rigio.Renderers;
+﻿using System;
+using Rigio.Models;
+using Rigio.Renderers;
+using Rigio.Views.Rigios;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace Rigio.Views
+namespace Rigio.Views.Menu
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class RigioPage : ContentPage
     {
+        ListView lvRigios = new ListView();
+
         public RigioPage()
         {
             FloatingActionButtonView _Fab;
@@ -14,27 +19,32 @@ namespace Rigio.Views
 
             InitializeComponent();
 
+            lvRigios.ItemTemplate = new DataTemplate(typeof(RigioCell));
+           
             _ScrollView = new ScrollView
             {
+                
                 Content = new StackLayout
                 {
                     Spacing = 0,
                     Children =
                     {
-                       
+                        lvRigios
                     }
                 }
             };
 
             #region compose view hierarchy
-            if (Device.OS == TargetPlatform.Android)
+            if (Device.RuntimePlatform.Equals("Android"))
             {
                 _Fab = new FloatingActionButtonView
                 {
                     ImageName = "fab_add.png",
                     ColorNormal = Color.FromHex("53BA9D"),
                     ColorPressed = Color.FromHex("42947D"),
-                    ColorRipple = Color.FromHex("53BA9D")
+                    ColorRipple = Color.FromHex("53BA9D"),
+
+                    Clicked = NavigateToCreateMatch
                 };
 
                 var absolute = new AbsoluteLayout
@@ -58,18 +68,45 @@ namespace Rigio.Views
             }
             else
             {
-                var syncButton = new ToolbarItem
+                var addButton = new ToolbarItem
                 {
                     Text = "Add",
                     Icon = "add_ios_gray",
                     //Order = ToolbarItemOrder.Primary
                 };
 
-                ToolbarItems.Add(syncButton);
+                addButton.Clicked += async (sender, args) =>
+                {
+                    NavigationPage.SetBackButtonTitle(this, "Back");
+
+                    await Navigation.PushAsync(new CreateRigioView(new Match(), false));
+                };
+
+                ToolbarItems.Add(addButton);
 
                 Content = _ScrollView;
             }
             #endregion
+        }
+
+        Action<object, EventArgs> NavigateToCreateMatch
+        {
+            get
+            {
+                return async (o, e) =>
+                {
+                    NavigationPage.SetBackButtonTitle(this, "Back");
+
+                    await Navigation.PushAsync(new CreateRigioView(new Match(), false));
+                };
+            }
+        }
+
+        protected override async void OnAppearing()
+        {
+            base.OnAppearing();
+
+            lvRigios.ItemsSource = await App.AccountManager.GetMatches();
         }
     }
 }

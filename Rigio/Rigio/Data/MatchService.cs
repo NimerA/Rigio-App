@@ -102,6 +102,7 @@ namespace Rigio.Data
             var success = false;
             try
             {
+                var url = getMatchUrl();
                 var response = await _client.PostAsync(getMatchUrl(), content);
                 success = response.IsSuccessStatusCode;
             }catch(Exception e)

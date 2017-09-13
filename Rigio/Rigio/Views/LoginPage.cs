@@ -1,21 +1,23 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Rigio.Data;
 using Rigio.Models;
-using Rigio.Renderers;
 using Xamarin.Forms;
 
 namespace Rigio.Views
 {
     public class LoginPage : ContentPage
     {
-        readonly Label _hintLabel;
-        readonly List<Button> _loginButtons = new List<Button>();
-        bool _isAuthenticated;
+        private Label _hintLabel;
+        private Button _loginButton = new Button();
+        private bool _isAuthenticated;
 
         public LoginPage()
+        {
+            InitUi();
+        }
+
+        private void InitUi()
         {
             Title = "Rigio Login";
 
@@ -28,118 +30,100 @@ namespace Rigio.Views
             var stackLayout = new StackLayout
             {
                 VerticalOptions = LayoutOptions.Center,
-                Children = { _hintLabel }
+                Children = {_hintLabel}
             };
-
-            var providers = new[] { "Facebook"};
-            foreach (var provider in providers)
-            {
-                var loginButton = new Button
-                {
-                    HorizontalOptions = LayoutOptions.Center,
-                    Text = $"Login {provider}",
-                    AutomationId = provider,
-                    HeightRequest = 35
-                };
-
-                loginButton.Clicked += LoginButtonOnClicked;
-
-                _loginButtons.Add(loginButton);
-                stackLayout.Children.Add(loginButton);
-            }
+            
+            InitLoginButton("Facebook", stackLayout);
 
             Content = stackLayout;
+        }
+
+        private void InitLoginButton(string provider, StackLayout stackLayout)
+        {
+            _loginButton = new Button
+            {
+                HorizontalOptions = LayoutOptions.Center,
+                Text = $"Login {provider}",
+                AutomationId = provider,
+                HeightRequest = 35
+            };
+
+            _loginButton.Clicked += LoginButtonOnClicked;
+
+            stackLayout.Children.Add(_loginButton);
         }
 
         async void LoginButtonOnClicked(object sender, EventArgs e)
         {
             if (_isAuthenticated)
             {
-                _hintLabel.Text = "Unauthenticated";
+                RedirectToMainPage(sender);
+            }
+            else
+            {
+                await Login(sender);
+            }
+        }
 
-                var senderBtn = sender as Button;
-                if (senderBtn == null) return;
+        private void RedirectToMainPage(object sender)
+        {
+            _hintLabel.Text = "Unauthenticated";
 
-                Logout(senderBtn.AutomationId);
+            var senderBtn = sender as Button;
+            if (senderBtn == null) return;
+            
+            _isAuthenticated = false;
+            _loginButton.IsEnabled = true;
+            _loginButton.Text = $"Login {_loginButton.AutomationId}";
 
-                _isAuthenticated = false;
-                foreach (var btn in _loginButtons)
-                {
-                    btn.IsEnabled = true;
-                    btn.Text = $"Login {btn.AutomationId}";
-                }
-                
+            Application.Current.MainPage = new NavigationPage(new MainPage());
+        }
+
+        private async Task Login(object sender)
+        {
+            var senderBtn = sender as Button;
+            if (senderBtn == null) return;
+
+            _hintLabel.Text = "Login. Please wait";
+            var loginResult = await DependencyService.Get<IFacebookService>().Login();
+
+            _loginButton.IsEnabled = false;
+
+            await ProccessLoginResult(loginResult);
+        }
+
+        private async Task ProccessLoginResult(LoginResult loginResult)
+        {
+            switch (loginResult.LoginState)
+            {
+                case LoginState.Canceled:
+                    _hintLabel.Text = "Canceled";
+                    _loginButton.IsEnabled = true;
+                    break;
+                case LoginState.Success:
+                    var account = await App.AccountManager.GetAccountAsync(loginResult.Token);
+                    ValidateAccount(account);
+                    break;
+                default:
+                    _hintLabel.Text = "Failed: " + loginResult.ErrorString;
+                    _loginButton.IsEnabled = true;
+                    break;
+            }
+        }
+
+        private void ValidateAccount(Account account)
+        {
+            if (account != null)
+            {
+                App.Account.Access_Token = account.Access_Token;
+                App.Account.UserId = account.UserId;
+                _isAuthenticated = true;
                 Application.Current.MainPage = new NavigationPage(new MainPage());
             }
             else
             {
-                var senderBtn = sender as Button;
-                if (senderBtn == null) return;
-                
-                _hintLabel.Text = "Login. Please wait";
-                var loginResult = await Login(senderBtn.AutomationId);
-
-
-                foreach (var btn in _loginButtons.Where(b => b != senderBtn))
-                    btn.IsEnabled = false;
-
-                switch (loginResult.LoginState)
-                {
-                    case LoginState.Canceled:
-                        _hintLabel.Text = "Canceled";
-                        foreach (var btn in _loginButtons.Where(b => b != senderBtn))
-                            btn.IsEnabled = true;
-                        break;
-                    case LoginState.Success:
-                        var account = await App.AccountManager.GetAccountAsync(loginResult.Token);
-
-                        if (account != null)
-                        {
-                            App.Account.Access_Token = account.Access_Token;
-                            App.Account.UserId = account.UserId;
-
-                            _isAuthenticated = true;
-
-                            Application.Current.MainPage = new NavigationPage(new MainPage());
-                        }
-                        else
-                        {
-                            _hintLabel.Text = "Failed try again";
-                            foreach (var btn in _loginButtons.Where(b => b != senderBtn))
-                                btn.IsEnabled = true;
-                        }
-
-                        break;
-                    default:
-                        _hintLabel.Text = "Failed: " + loginResult.ErrorString;
-                        foreach(var btn in _loginButtons.Where(b => b != senderBtn))
-                            btn.IsEnabled = true;
-                        break;
-                }
-            }
-        }
-
-        Task<LoginResult> Login(string providerName)
-        {
-            switch (providerName.ToLower())
-            {
-                case "facebook":
-                    return DependencyService.Get<IFacebookService>().Login();
-                default:
-                    return DependencyService.Get<IFacebookService>().Login();
-            }
-        }
-
-        void Logout(string providerName)
-        {
-            switch (providerName.ToLower())
-            {
-                case "facebook":
-                    DependencyService.Get<IFacebookService>().Logout();
-                    return;
-                default:
-                    DependencyService.Get<IFacebookService>().Logout();
-                    return;
+                _hintLabel.Text = "Failed try again";
+                _loginButton.IsEnabled = true;
             }
         }
     }

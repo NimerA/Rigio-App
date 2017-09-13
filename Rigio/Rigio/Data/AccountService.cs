@@ -4,6 +4,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Rigio.Models;
+using Newtonsoft.Json.Serialization;
 
 namespace Rigio.Data
 {
@@ -12,18 +13,21 @@ namespace Rigio.Data
         private string baseUrl;
         private static string apiUrl;
         private readonly HttpClient _client;
+        private readonly JsonSerializerSettings JsonSettings;
 
         public AccountService()
         {
-            baseUrl = "http://192.168.0.4:3000/";
+            baseUrl = "http://192.168.0.18:3000/";
 
             apiUrl = baseUrl + "api/";
-            _client = new HttpClient { MaxResponseContentBufferSize = 256000 };
-        }
-
-        string getAccessTokenUrl()
-        {
-            return "?access_token=" + App.Account.Access_Token;
+            _client = new HttpClient {
+                BaseAddress =  new Uri(apiUrl),
+                MaxResponseContentBufferSize = 256000
+            };
+            JsonSettings = new JsonSerializerSettings {
+                NullValueHandling = NullValueHandling.Ignore,
+                ContractResolver = new CamelCasePropertyNamesContractResolver()
+            };
         }
 
         public async Task<Account> GetAccountsAsync(string token)
@@ -32,11 +36,13 @@ namespace Rigio.Data
             try
             {
                 var restUrl = baseUrl + "auth/facebook-token/callback?access_token=" + token;
-                var response = await _client.GetAsync(restUrl);
+                var client = new HttpClient();
+                var response = await client.GetAsync(restUrl);
                 if (response.IsSuccessStatusCode)
                 {
                     var content = await response.Content.ReadAsStringAsync();
                     account = JsonConvert.DeserializeObject<Account>(content);
+                    _client.DefaultRequestHeaders.Add("access_token", account.Access_Token);
                 }
             }
             catch (Exception ex)
@@ -51,8 +57,7 @@ namespace Rigio.Data
         {
             try
             {
-                var restUrl = apiUrl + "users/logout" + getAccessTokenUrl();
-                var response = await _client.PostAsync(restUrl, null);
+                var response = await _client.PostAsync("users/logout", null);
                 return response.IsSuccessStatusCode;
             }
             catch (Exception ex)

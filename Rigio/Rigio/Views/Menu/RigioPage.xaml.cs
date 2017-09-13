@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Threading.Tasks;
 using Rigio.Models;
 using Rigio.Renderers;
 using Rigio.Views.Rigios;
@@ -15,9 +14,6 @@ namespace Rigio.Views.Menu
 
         public RigioPage()
         {
-            FloatingActionButtonView _Fab;
-            ScrollView _ScrollView;
-
             InitializeComponent();
 
             InitializeUi();
@@ -25,7 +21,9 @@ namespace Rigio.Views.Menu
 
         private void InitializeUi()
         {
+            FloatingActionButtonView _Fab;
             ScrollView _ScrollView;
+
             lvRigios.ItemTemplate = new DataTemplate(typeof(RigioCell));
 
             _ScrollView = new ScrollView
@@ -42,15 +40,15 @@ namespace Rigio.Views.Menu
 
             if (Device.RuntimePlatform.Equals("Android"))
             {
-                SetupAndroidAddButton(_ScrollView);
+                InitializeAndroidAddButton(_ScrollView, out _Fab);
             }
             else
             {
-                SetupIOsAddButton(_ScrollView);
+                InitializeIOsAddButton(_ScrollView);
             }
         }
 
-        private void SetupIOsAddButton(ScrollView _ScrollView)
+        private void InitializeIOsAddButton(ScrollView scrollView)
         {
             var addButton = new ToolbarItem
             {
@@ -68,13 +66,12 @@ namespace Rigio.Views.Menu
 
             ToolbarItems.Add(addButton);
 
-            Content = _ScrollView;
+            Content = scrollView;
         }
 
-        private void SetupAndroidAddButton(ScrollView _ScrollView)
+        private void InitializeAndroidAddButton(ScrollView scrollView, out FloatingActionButtonView fab)
         {
-            FloatingActionButtonView _Fab;
-            _Fab = new FloatingActionButtonView
+            fab = new FloatingActionButtonView
             {
                 ImageName = "fab_add.png",
                 ColorNormal = Color.FromHex("53BA9D"),
@@ -92,14 +89,14 @@ namespace Rigio.Views.Menu
 
             // Position the pageLayout to fill the entire screen.
             // Manage positioning of child elements on the page by editing the pageLayout.
-            AbsoluteLayout.SetLayoutFlags(_ScrollView, AbsoluteLayoutFlags.All);
-            AbsoluteLayout.SetLayoutBounds(_ScrollView, new Rectangle(0f, 0f, 1f, 1f));
-            absolute.Children.Add(_ScrollView);
+            AbsoluteLayout.SetLayoutFlags(scrollView, AbsoluteLayoutFlags.All);
+            AbsoluteLayout.SetLayoutBounds(scrollView, new Rectangle(0f, 0f, 1f, 1f));
+            absolute.Children.Add(scrollView);
 
             // Overlay the FAB in the bottom-right corner
-            AbsoluteLayout.SetLayoutFlags(_Fab, AbsoluteLayoutFlags.PositionProportional);
-            AbsoluteLayout.SetLayoutBounds(_Fab, new Rectangle(1f, 1f, AbsoluteLayout.AutoSize, AbsoluteLayout.AutoSize));
-            absolute.Children.Add(_Fab);
+            AbsoluteLayout.SetLayoutFlags(fab, AbsoluteLayoutFlags.PositionProportional);
+            AbsoluteLayout.SetLayoutBounds(fab, new Rectangle(1f, 1f, AbsoluteLayout.AutoSize, AbsoluteLayout.AutoSize));
+            absolute.Children.Add(fab);
 
             Content = absolute;
         }

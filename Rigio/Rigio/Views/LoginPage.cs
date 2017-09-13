@@ -1,19 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Rigio.Data;
 using Rigio.Models;
-using Rigio.Renderers;
 using Xamarin.Forms;
 
 namespace Rigio.Views
 {
     public class LoginPage : ContentPage
     {
-        Label _hintLabel;
-        readonly List<Button> _loginButtons = new List<Button>();
-        bool _isAuthenticated;
+        private Label _hintLabel;
+        private Button _loginButton = new Button();
+        private bool _isAuthenticated;
 
         public LoginPage()
         {
@@ -35,19 +32,15 @@ namespace Rigio.Views
                 VerticalOptions = LayoutOptions.Center,
                 Children = {_hintLabel}
             };
-
-            var providers = new[] {"Facebook"};
-            foreach (var provider in providers)
-            {
-                InitLoginButton(provider, stackLayout);
-            }
+            
+            InitLoginButton("Facebook", stackLayout);
 
             Content = stackLayout;
         }
 
         private void InitLoginButton(string provider, StackLayout stackLayout)
         {
-            var loginButton = new Button
+            _loginButton = new Button
             {
                 HorizontalOptions = LayoutOptions.Center,
                 Text = $"Login {provider}",
@@ -55,10 +48,9 @@ namespace Rigio.Views
                 HeightRequest = 35
             };
 
-            loginButton.Clicked += LoginButtonOnClicked;
+            _loginButton.Clicked += LoginButtonOnClicked;
 
-            _loginButtons.Add(loginButton);
-            stackLayout.Children.Add(loginButton);
+            stackLayout.Children.Add(_loginButton);
         }
 
         async void LoginButtonOnClicked(object sender, EventArgs e)
@@ -79,15 +71,10 @@ namespace Rigio.Views
 
             var senderBtn = sender as Button;
             if (senderBtn == null) return;
-
-            //Logout(senderBtn.AutomationId);
-
+            
             _isAuthenticated = false;
-            foreach (var btn in _loginButtons)
-            {
-                btn.IsEnabled = true;
-                btn.Text = $"Login {btn.AutomationId}";
-            }
+            _loginButton.IsEnabled = true;
+            _loginButton.Text = $"Login {_loginButton.AutomationId}";
 
             Application.Current.MainPage = new NavigationPage(new MainPage());
         }
@@ -98,37 +85,33 @@ namespace Rigio.Views
             if (senderBtn == null) return;
 
             _hintLabel.Text = "Login. Please wait";
-            var loginResult = await LoginToProvider(senderBtn.AutomationId);
-        
-            foreach (var btn in _loginButtons.Where(b => b != senderBtn))
-                btn.IsEnabled = false;
+            var loginResult = await DependencyService.Get<IFacebookService>().Login();
 
-            await ProccessLoginResult(loginResult, senderBtn);
+            _loginButton.IsEnabled = false;
+
+            await ProccessLoginResult(loginResult);
         }
 
-        private async Task ProccessLoginResult(LoginResult loginResult, Button senderBtn)
+        private async Task ProccessLoginResult(LoginResult loginResult)
         {
             switch (loginResult.LoginState)
             {
                 case LoginState.Canceled:
                     _hintLabel.Text = "Canceled";
-                    foreach (var btn in _loginButtons.Where(b => b != senderBtn))
-                        btn.IsEnabled = true;
+                    _loginButton.IsEnabled = true;
                     break;
                 case LoginState.Success:
                     var account = await App.AccountManager.GetAccountAsync(loginResult.Token);
-
-                    ValidateAccount(account, senderBtn);
+                    ValidateAccount(account);
                     break;
                 default:
                     _hintLabel.Text = "Failed: " + loginResult.ErrorString;
-                    foreach (var btn in _loginButtons.Where(b => b != senderBtn))
-                        btn.IsEnabled = true;
+                    _loginButton.IsEnabled = true;
                     break;
             }
         }
 
-        private void ValidateAccount(Account account, Button senderBtn)
+        private void ValidateAccount(Account account)
         {
             if (account != null)
             {
@@ -140,21 +123,7 @@ namespace Rigio.Views
             else
             {
                 _hintLabel.Text = "Failed try again";
-                foreach (var btn in _loginButtons.Where(b => b != senderBtn))
-                    btn.IsEnabled = true;
-            }
-        }
-        
-        Task<LoginResult> LoginToProvider(string providerName)
-        {
-
-            // get rid of switch
-            switch (providerName.ToLower())
-            {
-                case "facebook":
-                    return DependencyService.Get<IFacebookService>().Login();
-                default:
-                    return DependencyService.Get<IFacebookService>().Login();
+                _loginButton.IsEnabled = true;
             }
         }
     }

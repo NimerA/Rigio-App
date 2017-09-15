@@ -13,22 +13,22 @@ namespace Rigio.Data
     {
         string getInvitationSentUrl()
         {
-            return getInvitationBaseUrl() + "Sent" + getAccessTokenUrl();
+            return getInvitationBaseUrl() + "Sent";
         }
 
         string getInvitationSentUrl(int id)
         {
-            return getInvitationBaseUrl() + "Sent/" + id + getAccessTokenUrl();
+            return getInvitationBaseUrl() + "Sent/" + id;
         }
 
         string getInvitationRecievedUrl()
         {
-            return getInvitationBaseUrl() + "Recieved" + getAccessTokenUrl();
+            return getInvitationBaseUrl() + "Recieved";
         }
 
         string getInvitationBaseUrl()
         {
-            return apiUrl + "users/" + App.Account.UserId + "/Invitations";
+            return "users/" + App.Account.UserId + "/Invitations";
         }
 
         public async Task<Invitation> getInvitationById(int id)
@@ -38,10 +38,7 @@ namespace Rigio.Data
             try
             {
                 var content = await response.Content.ReadAsStringAsync();
-                invitation = JsonConvert.DeserializeObject<Invitation>(
-                    content,
-                    new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }
-                );
+                invitation = JsonConvert.DeserializeObject<Invitation>(content, JsonSettings);
             }
             catch (Exception e)
             {
@@ -58,10 +55,7 @@ namespace Rigio.Data
             try
             {
                 var content = await response.Content.ReadAsStringAsync();
-                invitations = JsonConvert.DeserializeObject<List<Invitation>>(
-                    content,
-                    new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }
-                );
+                invitations = JsonConvert.DeserializeObject<List<Invitation>>(content, JsonSettings);
             }
             catch (Exception e)
             {
@@ -78,10 +72,7 @@ namespace Rigio.Data
             try
             {
                 var content = await response.Content.ReadAsStringAsync();
-                invitations = JsonConvert.DeserializeObject<List<Invitation>>(
-                    content,
-                    new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }
-                );
+                invitations = JsonConvert.DeserializeObject<List<Invitation>>(content, JsonSettings);
             }
             catch (Exception e)
             {
@@ -92,10 +83,7 @@ namespace Rigio.Data
 
         public async Task<bool> createInvitation(Invitation invitation)
         {
-            string json = JsonConvert.SerializeObject(
-                invitation,
-                new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }
-            );
+            string json = JsonConvert.SerializeObject(invitation, JsonSettings);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
 
             var success = false;
@@ -119,10 +107,7 @@ namespace Rigio.Data
 
         public async Task<bool> patchInvitation(Invitation invitation)
         {
-            string json = JsonConvert.SerializeObject(
-                invitation,
-                new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }
-            );
+            string json = JsonConvert.SerializeObject(invitation, JsonSettings);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
 
             var success = false;

@@ -1,7 +1,9 @@
-﻿using Android.App;
+﻿using System;
+using Android.App;
 using Android.Content;
 using Android.Content.PM;
 using Android.OS;
+using PCLAppConfig;
 using Rigio.Droid.Dependencies;
 using Xamarin.Facebook;
 using Xamarin.Facebook.AppEvents;
@@ -25,6 +27,17 @@ namespace Rigio.Droid
 
             FacebookSdk.SdkInitialize(ApplicationContext);
             Forms.Init(this, bundle);
+            try
+            {
+                ConfigurationManager.Initialise(PCLAppConfig.FileSystemStream.PortableStream.Current);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+
+            
+
             LoadApplication(new App());
         }
 

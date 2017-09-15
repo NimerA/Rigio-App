@@ -49,6 +49,7 @@
     <Compile Include="Models\User.cs" />
     <Compile Include="Renderers\FacebookButton.cs" />
     <Compile Include="Renderers\FloatingActionButtonView.cs" />
+    <Compile Include="Views\Menu\HomePage.cs" />
     <Compile Include="Views\Rigios\CreateRigioView.xaml.cs">
       <DependentUpon>CreateRigioView.xaml</DependentUpon>
     </Compile>

@@ -22,11 +22,10 @@ namespace Rigio.Data
 
         async public Task<List<Match>> getMatches()
         {
-            var response = await _client.GetAsync(getMatchUrl());
-
             List<Match> matches = null;
             try
             {
+                var response = await _client.GetAsync(getMatchUrl());
                 var content = await response.Content.ReadAsStringAsync();
                 matches = JsonConvert.DeserializeObject<List<Match>>(content, JsonSettings);
             }

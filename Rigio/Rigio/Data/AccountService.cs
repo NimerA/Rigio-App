@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Rigio.Models;
 using Newtonsoft.Json.Serialization;
+using System.Collections.Generic;
 
 namespace Rigio.Data
 {
@@ -18,7 +19,6 @@ namespace Rigio.Data
         public AccountService()
         {
             baseUrl = "http://localhost:3000/";
-
             apiUrl = baseUrl + "api/";
             _client = new HttpClient {
                 BaseAddress =  new Uri(apiUrl),
@@ -67,9 +67,20 @@ namespace Rigio.Data
             return false;
         }
 
-        public Task<User> getUsers()
+        async public Task<List<User>> getUsers()
         {
-            throw new NotImplementedException();
+            List<User> users = null;
+            try
+            {
+                var response = await _client.GetAsync("users/getUsers");
+                var content = await response.Content.ReadAsStringAsync();
+                users = JsonConvert.DeserializeObject<List<User>>(content, JsonSettings);
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e);
+            }
+            return users;
         }
     }
 }

@@ -18,7 +18,7 @@ namespace Rigio.Data
 
         public AccountService()
         {
-            baseUrl = "http://localhost:3000/";
+            baseUrl = "http://192.168.0.11:3000/";
             apiUrl = baseUrl + "api/";
             _client = new HttpClient {
                 BaseAddress =  new Uri(apiUrl),
@@ -30,19 +30,19 @@ namespace Rigio.Data
             };
         }
 
-        public async Task<Account> GetAccountsAsync(string token)
+        public async Task<Account> GetAccounts(string facebookToken)
         {
             Account account = null;
             try
             {
-                var restUrl = baseUrl + "auth/facebook-token/callback?access_token=" + token;
+                var restUrl = baseUrl + "auth/facebook-token/callback?access_token=" + facebookToken;
                 var client = new HttpClient();
                 var response = await client.GetAsync(restUrl);
                 if (response.IsSuccessStatusCode)
                 {
                     var content = await response.Content.ReadAsStringAsync();
                     account = JsonConvert.DeserializeObject<Account>(content);
-                    _client.DefaultRequestHeaders.Add("access_token", account.Access_Token);
+                    _client.DefaultRequestHeaders.Add("access_token", account.Loopback_Access_Token);
                 }
             }
             catch (Exception ex)
@@ -67,7 +67,7 @@ namespace Rigio.Data
             return false;
         }
 
-        async public Task<List<User>> getUsers()
+        async public Task<List<User>> GetUsers()
         {
             List<User> users = null;
             try

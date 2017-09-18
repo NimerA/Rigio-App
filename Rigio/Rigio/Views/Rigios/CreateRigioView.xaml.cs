@@ -67,9 +67,9 @@ namespace Rigio.Views.Rigios
 
             bool response;
             if (_isEditing)
-                response = await App.AccountManager.PatchMatch(_rigio);
+                response = await App.AccountManager.UpdateMatch(_rigio);
             else
-                response = await App.AccountManager.PostMatch(_rigio);
+                response = await App.AccountManager.CreateMatch(_rigio);
 
             if (!response)
             {

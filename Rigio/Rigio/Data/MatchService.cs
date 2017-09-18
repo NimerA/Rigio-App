@@ -20,7 +20,7 @@ namespace Rigio.Data
             return "users/" + App.Account.UserId + "/matches";
         }
 
-        async public Task<List<Match>> getMatches()
+        async public Task<List<Match>> GetMatches()
         {
             List<Match> matches = null;
             try
@@ -36,7 +36,7 @@ namespace Rigio.Data
             return matches;
         }
 
-        public async Task<bool> patchMatch(Match match)
+        public async Task<bool> UpdateMatch(Match match)
         {
 			string json = JsonConvert.SerializeObject(match, JsonSettings);
 			var content = new StringContent(json, Encoding.UTF8, "application/json");
@@ -54,7 +54,7 @@ namespace Rigio.Data
 			return success;
         }
 
-        public async Task<Match> getMatchById(int id)
+        public async Task<Match> GetMatchById(int id)
         {
 			var response = await _client.GetAsync(getMatchUrl(id));
             Match match = null;
@@ -70,13 +70,13 @@ namespace Rigio.Data
 			return match;
         }
 
-        public async Task<bool> deleteMatchById(int id)
+        public async Task<bool> DeleteMatchById(int id)
         {
             var response = await _client.DeleteAsync(getMatchUrl(id));
             return response.IsSuccessStatusCode;
         }
 
-        public async Task<bool> createMatch(Match match)
+        public async Task<bool> CreateMatch(Match match)
         {
             string json = JsonConvert.SerializeObject(match, JsonSettings);
             var content = new StringContent(json, Encoding.UTF8, "application/json");

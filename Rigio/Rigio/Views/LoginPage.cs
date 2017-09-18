@@ -101,7 +101,7 @@ namespace Rigio.Views
                     _loginButton.IsEnabled = true;
                     break;
                 case LoginState.Success:
-                    var account = await App.AccountManager.GetAccountAsync(loginResult.Token);
+                    var account = await App.AccountManager.GetAccount(loginResult.Token);
                     ValidateAccount(account);
                     break;
                 default:
@@ -115,7 +115,7 @@ namespace Rigio.Views
         {
             if (account != null)
             {
-                App.Account.Access_Token = account.Access_Token;
+                App.Account.Loopback_Access_Token = account.Loopback_Access_Token;
                 App.Account.UserId = account.UserId;
                 _isAuthenticated = true;
                 Application.Current.MainPage = new NavigationPage(new MainPage());

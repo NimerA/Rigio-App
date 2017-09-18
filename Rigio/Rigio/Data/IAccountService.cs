@@ -6,22 +6,22 @@ namespace Rigio.Data
 {
     public interface IAccountService
     {
-        Task<Account> GetAccountsAsync(string token);
+        Task<Account> GetAccounts(string facebook_token);
         Task<bool> Logout();
 
-        Task<List<Match>> getMatches();
-        Task<bool> createMatch(Match match);
-        Task<Match> getMatchById(int id);
-        Task<bool> patchMatch(Match match);
-        Task<bool> deleteMatchById(int id);
+        Task<List<Match>> GetMatches();
+        Task<bool> CreateMatch(Match match);
+        Task<Match> GetMatchById(int id);
+        Task<bool> UpdateMatch(Match match);
+        Task<bool> DeleteMatchById(int id);
             
-        Task<List<Invitation>> getInvitationSent();
-        Task<List<Invitation>> getInvitationRecieved();
-        Task<bool> createInvitation(Invitation invitation);
-        Task<Invitation> getInvitationById(int id);
-        Task<bool> patchInvitation(Invitation invitation);
-        Task<bool> deleteInvitationById(int id);
+        Task<List<Invitation>> GetInvitationSent();
+        Task<List<Invitation>> GetInvitationRecieved();
+        Task<bool> CreateInvitation(Invitation invitation);
+        Task<Invitation> GetInvitationById(int id);
+        Task<bool> UpdateInvitation(Invitation invitation);
+        Task<bool> DeleteInvitationById(int id);
 
-        Task<List<User>> getUsers();
+        Task<List<User>> GetUsers();
     }
 }

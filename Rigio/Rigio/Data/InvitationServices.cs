@@ -31,7 +31,7 @@ namespace Rigio.Data
             return "users/" + App.Account.UserId + "/Invitations";
         }
 
-        public async Task<Invitation> getInvitationById(int id)
+        public async Task<Invitation> GetInvitationById(int id)
         {
             var response = await _client.GetAsync(getInvitationSentUrl(id));
             Invitation invitation = null;
@@ -47,7 +47,7 @@ namespace Rigio.Data
             return invitation;
         }
 
-        public async Task<List<Invitation>> getInvitationRecieved()
+        public async Task<List<Invitation>> GetInvitationRecieved()
         {
             var response = await _client.GetAsync(getInvitationRecievedUrl());
 
@@ -64,7 +64,7 @@ namespace Rigio.Data
             return invitations;
         }
 
-        public async Task<List<Invitation>> getInvitationSent()
+        public async Task<List<Invitation>> GetInvitationSent()
         {
             var response = await _client.GetAsync(getInvitationSentUrl());
 
@@ -81,7 +81,7 @@ namespace Rigio.Data
             return invitations;
         }
 
-        public async Task<bool> createInvitation(Invitation invitation)
+        public async Task<bool> CreateInvitation(Invitation invitation)
         {
             string json = JsonConvert.SerializeObject(invitation, JsonSettings);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
@@ -99,13 +99,13 @@ namespace Rigio.Data
             return success;
         }
 
-        public async Task<bool> deleteInvitationById(int id)
+        public async Task<bool> DeleteInvitationById(int id)
         {
             var response = await _client.DeleteAsync(getInvitationSentUrl(id));
             return response.IsSuccessStatusCode;
         }
 
-        public async Task<bool> patchInvitation(Invitation invitation)
+        public async Task<bool> UpdateInvitation(Invitation invitation)
         {
             string json = JsonConvert.SerializeObject(invitation, JsonSettings);
             var content = new StringContent(json, Encoding.UTF8, "application/json");

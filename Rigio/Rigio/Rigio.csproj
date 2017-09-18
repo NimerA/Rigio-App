@@ -36,7 +36,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="App.cs" />
-    <Compile Include="Data\AccountManager.cs" />
+    <Compile Include="Data\ServicesManager.cs" />
     <Compile Include="Data\AccountService.cs" />
     <Compile Include="Data\InvitationServices.cs" />
     <Compile Include="Data\MatchService.cs" />
@@ -68,6 +68,10 @@
       <DependentUpon>SettingsPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Rigios\RigioCell.cs" />
+    <Compile Include="Data\IMatchService.cs" />
+    <Compile Include="Data\AccountInfo.cs" />
+    <Compile Include="Data\IAccountInfo.cs" />
+    <Compile Include="Data\IInvitationService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">

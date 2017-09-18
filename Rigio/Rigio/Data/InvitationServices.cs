@@ -9,8 +9,19 @@ using System.Threading.Tasks;
 
 namespace Rigio.Data
 {
-    public partial class AccountService
+    public class InvitationService: IInvitationService
     {
+		private readonly HttpClient _client;
+		private readonly JsonSerializerSettings _jsonSettings;
+        private readonly IAccountInfo _accountInfo;
+
+        public InvitationService(HttpClient client, JsonSerializerSettings jsonSettings, IAccountInfo accountInfo)
+		{
+			_client = client;
+			_jsonSettings = jsonSettings;
+            _accountInfo = accountInfo;
+		}
+
         string getInvitationSentUrl()
         {
             return getInvitationBaseUrl() + "Sent";
@@ -28,7 +39,7 @@ namespace Rigio.Data
 
         string getInvitationBaseUrl()
         {
-            return "users/" + App.Account.UserId + "/Invitations";
+            return "users/" + _accountInfo.GetUserId() + "/Invitations";
         }
 
         public async Task<Invitation> GetInvitationById(int id)
@@ -38,7 +49,7 @@ namespace Rigio.Data
             try
             {
                 var content = await response.Content.ReadAsStringAsync();
-                invitation = JsonConvert.DeserializeObject<Invitation>(content, JsonSettings);
+                invitation = JsonConvert.DeserializeObject<Invitation>(content, _jsonSettings);
             }
             catch (Exception e)
             {
@@ -55,7 +66,7 @@ namespace Rigio.Data
             try
             {
                 var content = await response.Content.ReadAsStringAsync();
-                invitations = JsonConvert.DeserializeObject<List<Invitation>>(content, JsonSettings);
+                invitations = JsonConvert.DeserializeObject<List<Invitation>>(content, _jsonSettings);
             }
             catch (Exception e)
             {
@@ -72,7 +83,7 @@ namespace Rigio.Data
             try
             {
                 var content = await response.Content.ReadAsStringAsync();
-                invitations = JsonConvert.DeserializeObject<List<Invitation>>(content, JsonSettings);
+                invitations = JsonConvert.DeserializeObject<List<Invitation>>(content, _jsonSettings);
             }
             catch (Exception e)
             {
@@ -83,7 +94,7 @@ namespace Rigio.Data
 
         public async Task<bool> CreateInvitation(Invitation invitation)
         {
-            string json = JsonConvert.SerializeObject(invitation, JsonSettings);
+            string json = JsonConvert.SerializeObject(invitation, _jsonSettings);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
 
             var success = false;
@@ -107,7 +118,7 @@ namespace Rigio.Data
 
         public async Task<bool> UpdateInvitation(Invitation invitation)
         {
-            string json = JsonConvert.SerializeObject(invitation, JsonSettings);
+            string json = JsonConvert.SerializeObject(invitation, _jsonSettings);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
 
             var success = false;

@@ -11,23 +11,15 @@ namespace Rigio.Data
 {
     public partial class AccountService : IAccountService
     {
-        private string baseUrl;
-        private static string apiUrl;
         private readonly HttpClient _client;
-        private readonly JsonSerializerSettings JsonSettings;
+        private readonly JsonSerializerSettings _jsonSettings;
+        private readonly string _baseUrl;
 
-        public AccountService()
+        public AccountService(string baseUrl, HttpClient client, JsonSerializerSettings jsonSettings)
         {
-            baseUrl = "http://192.168.0.11:3000/";
-            apiUrl = baseUrl + "api/";
-            _client = new HttpClient {
-                BaseAddress =  new Uri(apiUrl),
-                MaxResponseContentBufferSize = 256000
-            };
-            JsonSettings = new JsonSerializerSettings {
-                NullValueHandling = NullValueHandling.Ignore,
-                ContractResolver = new CamelCasePropertyNamesContractResolver()
-            };
+            _baseUrl = baseUrl;
+            _client = client;
+            _jsonSettings = jsonSettings;
         }
 
         public async Task<Account> GetAccounts(string facebookToken)
@@ -35,7 +27,7 @@ namespace Rigio.Data
             Account account = null;
             try
             {
-                var restUrl = baseUrl + "auth/facebook-token/callback?access_token=" + facebookToken;
+                var restUrl = _baseUrl + "auth/facebook-token/callback?access_token=" + facebookToken;
                 var client = new HttpClient();
                 var response = await client.GetAsync(restUrl);
                 if (response.IsSuccessStatusCode)
@@ -74,7 +66,7 @@ namespace Rigio.Data
             {
                 var response = await _client.GetAsync("users/getUsers");
                 var content = await response.Content.ReadAsStringAsync();
-                users = JsonConvert.DeserializeObject<List<User>>(content, JsonSettings);
+                users = JsonConvert.DeserializeObject<List<User>>(content, _jsonSettings);
             }
             catch (Exception e)
             {

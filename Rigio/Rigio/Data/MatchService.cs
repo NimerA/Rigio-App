@@ -9,15 +9,26 @@ using System.Threading.Tasks;
 
 namespace Rigio.Data
 {
-    public partial class AccountService
+    public class MatchService: IMatchService
     {
+		private readonly HttpClient _client;
+		private readonly JsonSerializerSettings _jsonSettings;
+        private readonly IAccountInfo _accountInfo;
+
+        public MatchService(HttpClient client, JsonSerializerSettings jsonSettings, IAccountInfo accountInfo)
+		{
+            _client = client;
+            _jsonSettings = jsonSettings;
+            _accountInfo = accountInfo;
+		}
+
        string getMatchUrl(int id)
 		{
 			return getMatchUrl() + "/" + id;
 		}
 
         string getMatchUrl() {
-            return "users/" + App.Account.UserId + "/matches";
+            return "users/" + _accountInfo.GetUserId() + "/matches";
         }
 
         async public Task<List<Match>> GetMatches()
@@ -27,7 +38,7 @@ namespace Rigio.Data
             {
                 var response = await _client.GetAsync(getMatchUrl());
                 var content = await response.Content.ReadAsStringAsync();
-                matches = JsonConvert.DeserializeObject<List<Match>>(content, JsonSettings);
+                matches = JsonConvert.DeserializeObject<List<Match>>(content, _jsonSettings);
             }
             catch (Exception e)
             {
@@ -38,7 +49,7 @@ namespace Rigio.Data
 
         public async Task<bool> UpdateMatch(Match match)
         {
-			string json = JsonConvert.SerializeObject(match, JsonSettings);
+			string json = JsonConvert.SerializeObject(match, _jsonSettings);
 			var content = new StringContent(json, Encoding.UTF8, "application/json");
 
 			var success = false;
@@ -61,7 +72,7 @@ namespace Rigio.Data
 			try
 			{
 				var content = await response.Content.ReadAsStringAsync();
-				match = JsonConvert.DeserializeObject<Match>(content, JsonSettings);
+				match = JsonConvert.DeserializeObject<Match>(content, _jsonSettings);
 			}
 			catch (Exception e)
 			{
@@ -78,7 +89,7 @@ namespace Rigio.Data
 
         public async Task<bool> CreateMatch(Match match)
         {
-            string json = JsonConvert.SerializeObject(match, JsonSettings);
+            string json = JsonConvert.SerializeObject(match, _jsonSettings);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
 
             var success = false;

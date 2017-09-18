@@ -22,6 +22,6 @@ namespace Rigio.Data
         Task<bool> patchInvitation(Invitation invitation);
         Task<bool> deleteInvitationById(int id);
 
-        Task<User> getUsers();
+        Task<List<User>> getUsers();
     }
 }

@@ -61,17 +61,7 @@ namespace Rigio.Views
 
         private void RedirectToMainPage()
         {
-            // REvisar si es necesario
-            ResetUi();
             Application.Current.MainPage = new NavigationPage(new MainPage());
-        }
-
-        private void ResetUi()
-        {
-            _hintLabel.Text = "Unauthenticated";
-            _isAuthenticated = false;
-            _loginButton.IsEnabled = true;
-            _loginButton.Text = $"Login {_loginButton.AutomationId}";
         }
 
         private async Task Login()

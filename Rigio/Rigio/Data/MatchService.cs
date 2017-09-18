@@ -11,32 +11,23 @@ namespace Rigio.Data
 {
     public partial class AccountService
     {
-        string getMatchUrl()
-        {
-            return getMatchBaseUrl() + getAccessTokenUrl();
-        }
-
-		string getMatchUrl(int id)
+       string getMatchUrl(int id)
 		{
-			return getMatchBaseUrl() + "/" + id + getAccessTokenUrl();
+			return getMatchUrl() + "/" + id;
 		}
 
-        string getMatchBaseUrl() {
-            return apiUrl + "users/" + App.Account.UserId + "/Matches";
+        string getMatchUrl() {
+            return "users/" + App.Account.UserId + "/matches";
         }
 
         async public Task<List<Match>> getMatches()
         {
-            var response = await _client.GetAsync(getMatchUrl());
-
             List<Match> matches = null;
             try
             {
+                var response = await _client.GetAsync(getMatchUrl());
                 var content = await response.Content.ReadAsStringAsync();
-                matches = JsonConvert.DeserializeObject<List<Match>>(
-                    content,
-                    new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }
-                );
+                matches = JsonConvert.DeserializeObject<List<Match>>(content, JsonSettings);
             }
             catch (Exception e)
             {
@@ -47,10 +38,7 @@ namespace Rigio.Data
 
         public async Task<bool> patchMatch(Match match)
         {
-			string json = JsonConvert.SerializeObject(
-				match,
-				new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }
-			);
+			string json = JsonConvert.SerializeObject(match, JsonSettings);
 			var content = new StringContent(json, Encoding.UTF8, "application/json");
 
 			var success = false;
@@ -73,10 +61,7 @@ namespace Rigio.Data
 			try
 			{
 				var content = await response.Content.ReadAsStringAsync();
-				match = JsonConvert.DeserializeObject<Match>(
-                    content,
-					new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }
-				);
+				match = JsonConvert.DeserializeObject<Match>(content, JsonSettings);
 			}
 			catch (Exception e)
 			{
@@ -93,10 +78,7 @@ namespace Rigio.Data
 
         public async Task<bool> createMatch(Match match)
         {
-            string json = JsonConvert.SerializeObject(
-                match, 
-                new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }
-            );
+            string json = JsonConvert.SerializeObject(match, JsonSettings);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
 
             var success = false;

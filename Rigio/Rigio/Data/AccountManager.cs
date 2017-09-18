@@ -18,6 +18,7 @@ namespace Rigio.Data
 
         public Task<Account> GetAccountAsync(string token) { return _accountService.GetAccountsAsync(token); }
         public Task<bool> Logout() { return _accountService.Logout(); }
+        public Task<List<User>> GetUsers() { return _accountService.getUsers(); }
 
         public Task<List<Match>> GetMatches() { return _accountService.getMatches(); }
         public Task<bool> PostMatch(Match match) { return _accountService.createMatch(match); }

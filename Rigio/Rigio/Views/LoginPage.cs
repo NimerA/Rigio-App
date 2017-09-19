@@ -81,7 +81,7 @@ namespace Rigio.Views
                     _loginButton.IsEnabled = true;
                     break;
                 case LoginState.Success:
-                    var account = await App.AccountManager.GetAccountAsync(loginResult.Token);
+                    var account = await App.AccountManager.GetAccount(loginResult.Token);
                     if(ValidateAccount(account))
                         Application.Current.MainPage = new NavigationPage(new MainPage());
                     break;

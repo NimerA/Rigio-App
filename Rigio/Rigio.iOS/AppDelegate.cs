@@ -1,5 +1,4 @@
 ﻿using Foundation;
-using PCLAppConfig;
 using UIKit;
 
 namespace Rigio.iOS
@@ -10,9 +9,6 @@ namespace Rigio.iOS
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
             Xamarin.Forms.Forms.Init();
-
-            ConfigurationManager.Initialise(PCLAppConfig.FileSystemStream.PortableStream.Current);
-
             LoadApplication(new App());
 
             Facebook.CoreKit.Profile.EnableUpdatesOnAccessTokenChange(true);

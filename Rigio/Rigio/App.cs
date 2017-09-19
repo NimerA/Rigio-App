@@ -17,7 +17,7 @@ namespace Rigio
 
         public App()
 		{
-			var baseUrl = "http://10.102.1.157:3000/";
+			var baseUrl = "http://localhost:3000/";
 			var apiUrl = baseUrl + "api/";
 			var client = new HttpClient
 			{

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +9,8 @@ namespace Rigio.Models
 {
     public class Account
     {
-        public string Access_Token { get; set; }
+        [JsonProperty("Access_Token")]
+        public string Loopback_Access_Token { get; set; }
         public string UserId { get; set; }
     }
 }

@@ -18,7 +18,7 @@ namespace Rigio.Data
 
         public AccountService()
         {
-            baseUrl = "http://172.16.11.32:3000/";
+            baseUrl = "http://192.168.0.8:3000/";
 
             apiUrl = baseUrl + "api/";
             _client = new HttpClient {

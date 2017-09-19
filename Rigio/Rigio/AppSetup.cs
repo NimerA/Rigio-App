@@ -1,6 +1,5 @@
 ﻿using Autofac;
 using Rigio.Data;
-using Xamarin.Forms;
 
 namespace Rigio
 {
@@ -8,10 +7,13 @@ namespace Rigio
     {
         public static IContainer CreateContainer()
         {
-            ContainerBuilder cb = new ContainerBuilder();
+            var cb = new ContainerBuilder();
 
             // Services
             cb.RegisterType<AccountService>().As<IAccountService>().SingleInstance();
+            cb.RegisterType<AccountInfo>().As<IAccountInfo>().SingleInstance();
+            cb.RegisterType<InvitationService>().As<IInvitationService>().SingleInstance();
+            cb.RegisterType<MatchService>().As<IMatchService>().SingleInstance();
 
             //cb.RegisterInstance(DependencyService.Get<IFacebookService>()).As<IFacebookService>().SingleInstance();
 

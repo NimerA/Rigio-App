@@ -89,9 +89,13 @@ namespace Rigio.Views.Rigios
                 if (!response) return;
 
                 var mi = ((MenuItem)sender).CommandParameter as Match;
-                await ((AccountService)App.Container.Resolve<IAccountService>()).deleteMatchById((int)mi.id);
+                //await ((MatchService)App.Container.Resolve<IAccountService>()).DeleteMatchById((int)mi.id);
 
-                ((ListView) Parent).ItemsSource = await ((AccountService)App.Container.Resolve<IAccountService>()).getMatches();
+                //((ListView) Parent).ItemsSource = await ((MatchService)App.Container.Resolve<IMatchService>()).GetMatches();
+                await App.AccountManager.DeleteMatch((int)mi.id);
+
+                ((ListView)Parent).ItemsSource = await App.AccountManager.GetMatches();
+
 
             };
             // add to the ViewCell's ContextActions property

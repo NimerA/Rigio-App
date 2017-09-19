@@ -1,4 +1,9 @@
-﻿using Autofac;
+﻿using System;
+using System.Net.Http;
+using Autofac;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
+using Rigio.Data;
 using Rigio.Views;
 using Xamarin.Forms;
 using Rigio.Models;
@@ -7,25 +12,46 @@ namespace Rigio
 {
     public class App : Application
     {
+        public static ServicesManager AccountManager { get; private set; }
+
+        // new 
         public static Account Account { get; private set; }
 
         public static IContainer Container { get; set; }
 
         public App()
 		{
-		   // _accountService = accountService;
-		    var builder  = AppSetup.CreateContainer();
+		    var baseUrl = "http://172.16.11.32:3000/";
+		    var apiUrl = baseUrl + "api/";
+		    var client = new HttpClient
+		    {
+		        BaseAddress = new Uri(apiUrl),
+		        MaxResponseContentBufferSize = 256000
 
-            // _container.
-            // AccountManager = new AccountManager(new AccountService());
-            //NaviService = _container.Resolve<IAccountService>() as NavigationService;
+		    };
+		    var jsonSettings = new JsonSerializerSettings
+		    {
+		        NullValueHandling = NullValueHandling.Ignore,
+		        ContractResolver = new CamelCasePropertyNamesContractResolver()
+		    };
 
-		    Container = builder;
+		    var accountInfo = new AccountInfo();
+		    AccountManager = new ServicesManager(
+		        new AccountService(baseUrl, client, jsonSettings),
+		        new MatchService(client, jsonSettings, accountInfo),
+		        new InvitationService(client, jsonSettings, accountInfo)
+		    );
+		    Account = new Account();
+		    MainPage = new NavigationPage(new LoginPage());
 
-            Account = new Account();
-            MainPage = new NavigationPage(new LoginPage());
 
-          //  Container.res
+            //NEW 
+      //      var builder  = AppSetup.CreateContainer();
+         
+		    //Container = builder;
+
+      //      Account = new Account();
+      //      MainPage = new NavigationPage(new LoginPage());
         }
 
         protected override void OnStart()

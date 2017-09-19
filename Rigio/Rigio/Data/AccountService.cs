@@ -4,12 +4,11 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Rigio.Models;
-using Newtonsoft.Json.Serialization;
 using System.Collections.Generic;
 
 namespace Rigio.Data
 {
-    public partial class AccountService : IAccountService
+    public class AccountService : IAccountService
     {
         private readonly HttpClient _client;
         private readonly JsonSerializerSettings _jsonSettings;
@@ -59,7 +58,7 @@ namespace Rigio.Data
             return false;
         }
         
-        async public Task<List<User>> GetUsers()
+        public async Task<List<User>> GetUsers()
         {
             List<User> users = null;
             try

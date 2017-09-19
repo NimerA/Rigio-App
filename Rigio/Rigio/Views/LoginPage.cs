@@ -96,7 +96,7 @@ namespace Rigio.Views
         {
             if (account != null)
             {
-                App.Account.Access_Token = account.Access_Token;
+                App.Account.Loopback_Access_Token = account.Loopback_Access_Token;
                 App.Account.UserId = account.UserId;
                 _isAuthenticated = true;
                 return true;

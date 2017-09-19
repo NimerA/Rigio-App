@@ -47,48 +47,28 @@ namespace Rigio.Views
                 AutomationId = provider,
                 HeightRequest = 35
             };
-
             _loginButton.Clicked += LoginButtonOnClicked;
-
             stackLayout.Children.Add(_loginButton);
         }
 
         async void LoginButtonOnClicked(object sender, EventArgs e)
         {
             if (_isAuthenticated)
-            {
-                RedirectToMainPage(sender);
-            }
+                RedirectToMainPage();            
             else
-            {
-                await Login(sender);
-            }
+                await Login();
         }
 
-        private void RedirectToMainPage(object sender)
+        private void RedirectToMainPage()
         {
-            _hintLabel.Text = "Unauthenticated";
-
-            var senderBtn = sender as Button;
-            if (senderBtn == null) return;
-            
-            _isAuthenticated = false;
-            _loginButton.IsEnabled = true;
-            _loginButton.Text = $"Login {_loginButton.AutomationId}";
-
             Application.Current.MainPage = new NavigationPage(new MainPage());
         }
 
-        private async Task Login(object sender)
+        private async Task Login()
         {
-            var senderBtn = sender as Button;
-            if (senderBtn == null) return;
-
             _hintLabel.Text = "Login. Please wait";
             var loginResult = await DependencyService.Get<IFacebookService>().Login();
-
             _loginButton.IsEnabled = false;
-
             await ProccessLoginResult(loginResult);
         }
 
@@ -102,7 +82,8 @@ namespace Rigio.Views
                     break;
                 case LoginState.Success:
                     var account = await App.AccountManager.GetAccount(loginResult.Token);
-                    ValidateAccount(account);
+                    if(ValidateAccount(account))
+                        Application.Current.MainPage = new NavigationPage(new MainPage());
                     break;
                 default:
                     _hintLabel.Text = "Failed: " + loginResult.ErrorString;
@@ -111,20 +92,18 @@ namespace Rigio.Views
             }
         }
 
-        private void ValidateAccount(Account account)
+        private bool ValidateAccount(Account account)
         {
             if (account != null)
             {
                 App.Account.Loopback_Access_Token = account.Loopback_Access_Token;
                 App.Account.UserId = account.UserId;
                 _isAuthenticated = true;
-                Application.Current.MainPage = new NavigationPage(new MainPage());
+                return true;
             }
-            else
-            {
-                _hintLabel.Text = "Failed try again";
-                _loginButton.IsEnabled = true;
-            }
+            _hintLabel.Text = "Failed try again";
+            _loginButton.IsEnabled = true;
+            return false;
         }
     }
 }

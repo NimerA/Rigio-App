@@ -1,4 +1,5 @@
-﻿using Android.App;
+﻿using System;
+using Android.App;
 using Android.Content;
 using Android.Content.PM;
 using Android.OS;
@@ -25,6 +26,7 @@ namespace Rigio.Droid
 
             FacebookSdk.SdkInitialize(ApplicationContext);
             Forms.Init(this, bundle);
+
             LoadApplication(new App());
         }
 

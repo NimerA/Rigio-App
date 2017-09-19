@@ -1,4 +1,6 @@
 ﻿using System;
+using Autofac;
+using Rigio.Data;
 using Rigio.Models;
 using Rigio.Renderers;
 using Rigio.Views.Rigios;
@@ -118,7 +120,7 @@ namespace Rigio.Views.Menu
         {
             base.OnAppearing();
 
-            lvRigios.ItemsSource = await App.AccountManager.GetMatches();
+            lvRigios.ItemsSource = await ((AccountService)App.Container.Resolve<IAccountService>()).getMatches();
         }
     }
 }

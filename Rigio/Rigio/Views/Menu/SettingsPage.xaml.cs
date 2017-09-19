@@ -1,4 +1,6 @@
 ﻿using System;
+using Autofac;
+using Rigio.Data;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -14,7 +16,7 @@ namespace Rigio.Views.Menu
 
         private async void Button_OnClicked(object sender, EventArgs e)
         {
-            var respnse = await App.AccountManager.Logout();
+            var respnse = await ((AccountService)App.Container.Resolve<IAccountService>()).Logout();
 
             if (respnse)
             {

@@ -1,4 +1,5 @@
 ﻿using System;
+using Autofac;
 using Rigio.Data;
 using Rigio.Views;
 using Xamarin.Forms;
@@ -9,14 +10,26 @@ namespace Rigio
     public class App : Application
     {
 
-        public static AccountManager AccountManager { get; private set; }
+        //public static AccountManager AccountManager { get; private set; }
         public static Account Account { get; private set; }
+
+        public static IContainer Container { get; set; }
 
         public App()
 		{
-		    AccountManager = new AccountManager(new AccountService());
+		   // _accountService = accountService;
+		    var builder  = AppSetup.CreateContainer();
+
+            // _container.
+            // AccountManager = new AccountManager(new AccountService());
+            //NaviService = _container.Resolve<IAccountService>() as NavigationService;
+
+		    Container = builder;
+
             Account = new Account();
             MainPage = new NavigationPage(new LoginPage());
+
+          //  Container.res
         }
 
         protected override void OnStart()

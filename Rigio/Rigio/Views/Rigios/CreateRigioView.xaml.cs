@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Globalization;
+using Autofac;
+using Rigio.Data;
 using Rigio.Models;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -67,9 +69,9 @@ namespace Rigio.Views.Rigios
 
             bool response;
             if (_isEditing)
-                response = await App.AccountManager.PatchMatch(_rigio);
+                response = await ((AccountService)App.Container.Resolve<IAccountService>()).patchMatch(_rigio);
             else
-                response = await App.AccountManager.PostMatch(_rigio);
+                response = await ((AccountService)App.Container.Resolve<IAccountService>()).patchMatch(_rigio);
 
             if (!response)
             {

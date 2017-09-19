@@ -1,4 +1,6 @@
 ﻿using System.Diagnostics;
+using Autofac;
+using Rigio.Data;
 using Rigio.Models;
 using Xamarin.Forms;
 
@@ -87,9 +89,9 @@ namespace Rigio.Views.Rigios
                 if (!response) return;
 
                 var mi = ((MenuItem)sender).CommandParameter as Match;
-                await App.AccountManager.DeleteMatch((int)mi.id);
+                await ((AccountService)App.Container.Resolve<IAccountService>()).deleteMatchById((int)mi.id);
 
-                ((ListView) Parent).ItemsSource = await App.AccountManager.GetMatches();
+                ((ListView) Parent).ItemsSource = await ((AccountService)App.Container.Resolve<IAccountService>()).getMatches();
 
             };
             // add to the ViewCell's ContextActions property

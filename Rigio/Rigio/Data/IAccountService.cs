@@ -8,7 +8,7 @@ namespace Rigio.Data
     {
         Task<Account> GetAccounts(string facebook_token);
         Task<bool> Logout();
-
+        
         Task<List<User>> GetUsers();
     }
 }

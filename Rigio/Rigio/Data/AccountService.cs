@@ -58,7 +58,7 @@ namespace Rigio.Data
             }
             return false;
         }
-
+        
         async public Task<List<User>> GetUsers()
         {
             List<User> users = null;

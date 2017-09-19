@@ -9,7 +9,6 @@ namespace Rigio.iOS
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
             Xamarin.Forms.Forms.Init();
-
             LoadApplication(new App());
 
             Facebook.CoreKit.Profile.EnableUpdatesOnAccessTokenChange(true);

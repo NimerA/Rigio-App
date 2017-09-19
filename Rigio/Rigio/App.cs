@@ -1,6 +1,4 @@
-﻿using System;
-using Autofac;
-using Rigio.Data;
+﻿using Autofac;
 using Rigio.Views;
 using Xamarin.Forms;
 using Rigio.Models;
@@ -9,8 +7,6 @@ namespace Rigio
 {
     public class App : Application
     {
-
-        //public static AccountManager AccountManager { get; private set; }
         public static Account Account { get; private set; }
 
         public static IContainer Container { get; set; }

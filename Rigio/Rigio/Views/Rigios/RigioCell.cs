@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using Autofac;
+using Rigio.Data;
 using Rigio.Models;
 using Xamarin.Forms;
 
@@ -32,12 +33,6 @@ namespace Rigio.Views.Rigios
             };
             descriptionData.SetBinding(Label.TextProperty, new Binding("Description"));
 
-            var dateLabel = new Label
-            {
-                HorizontalOptions = LayoutOptions.Start,
-                Text = "Fecha:"
-            };
-
             var dateData = new Label
             {
                 HorizontalOptions = LayoutOptions.Start
@@ -56,12 +51,6 @@ namespace Rigio.Views.Rigios
                 Orientation = StackOrientation.Horizontal
             };
 
-            //var panel3 = new StackLayout
-            //{
-            //    Children = { dateLabel, dateData },
-            //    Orientation = StackOrientation.Horizontal
-            //};
-            
             View = new StackLayout
             {
                 Children = { panel1, panel2 },
@@ -87,10 +76,9 @@ namespace Rigio.Views.Rigios
                 if (!response) return;
 
                 var mi = ((MenuItem)sender).CommandParameter as Match;
-                await App.AccountManager.DeleteMatch((int)mi.id);
+                await ((MatchService)App.Container.Resolve<IAccountService>()).DeleteMatchById((int)mi.id);
 
-                ((ListView) Parent).ItemsSource = await App.AccountManager.GetMatches();
-
+                ((ListView)Parent).ItemsSource = await ((MatchService)App.Container.Resolve<IMatchService>()).GetMatches();
             };
             // add to the ViewCell's ContextActions property
             ContextActions.Add(editAction);

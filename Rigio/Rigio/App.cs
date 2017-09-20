@@ -1,41 +1,22 @@
-﻿using System;
-using Rigio.Data;
+﻿using Autofac;
 using Rigio.Views;
 using Xamarin.Forms;
 using Rigio.Models;
-using System.Net.Http;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
 
 namespace Rigio
 {
     public class App : Application
     {
-
-        public static ServicesManager AccountManager { get; private set; }
         public static Account Account { get; private set; }
+
+        public static IContainer Container { get; set; }
 
         public App()
 		{
-			var baseUrl = "http://localhost:3000/";
-			var apiUrl = baseUrl + "api/";
-			var client = new HttpClient
-			{
-				BaseAddress = new Uri(apiUrl),
-				MaxResponseContentBufferSize = 256000
+            var builder = AppSetup.CreateContainer();
 
-			};
-			var jsonSettings = new JsonSerializerSettings
-			{
-				NullValueHandling = NullValueHandling.Ignore,
-				ContractResolver = new CamelCasePropertyNamesContractResolver()
-			};
-            var accountInfo = new AccountInfo();
-            AccountManager = new ServicesManager(
-                new AccountService(baseUrl, client, jsonSettings), 
-                new MatchService(client, jsonSettings, accountInfo),
-                new InvitationService(client, jsonSettings, accountInfo)
-            );
+            Container = builder;
+
             Account = new Account();
             MainPage = new NavigationPage(new LoginPage());
         }

@@ -31,7 +31,7 @@ namespace Rigio.Data
             return "users/" + _accountInfo.GetUserId() + "/matches";
         }
 
-        async public Task<List<Match>> GetMatches()
+        public async Task<List<Match>> GetMatches()
         {
             List<Match> matches = null;
             try

@@ -16,7 +16,7 @@ namespace Rigio.Views.Menu
 
         private async void Button_OnClicked(object sender, EventArgs e)
         {
-            var respnse = await ((AccountService)App.Container.Resolve<IAccountService>()).Logout();
+            var respnse = await ((AccountService)AppSetup.Instance.Resolve<IAccountService>()).Logout();
             
             if (respnse)
             {

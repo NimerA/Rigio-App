@@ -69,9 +69,9 @@ namespace Rigio.Views.Rigios
 
             bool response;
             if (_isEditing)
-                response = await ((MatchService)App.Container.Resolve<IMatchService>()).UpdateMatch(_rigio);
+                response = await ((MatchService)AppSetup.Instance.Resolve<IMatchService>()).UpdateMatch(_rigio);
             else
-                response = await ((MatchService)App.Container.Resolve<IMatchService>()).CreateMatch(_rigio);
+                response = await ((MatchService)AppSetup.Instance.Resolve<IMatchService>()).CreateMatch(_rigio);
 
             if (!response)
             {

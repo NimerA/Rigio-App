@@ -7,13 +7,35 @@ using Rigio.Data;
 
 namespace Rigio
 {
-    public static class AppSetup
+    public class AppSetup
     {
-        public static IContainer CreateContainer()
+        private static IContainer _instance;
+
+        private AppSetup()
+        {
+            
+        }
+
+		public void Destroyer()
+		{
+            _instance = CreateContainer();
+		}
+
+        public static IContainer Instance
+		{
+			get
+			{
+				if (_instance != null) return _instance;
+                _instance = CreateContainer();
+				return _instance;
+			}
+		}
+
+        static IContainer CreateContainer()
         {
             var cb = new ContainerBuilder();
 
-            var baseUrl = "http://172.16.11.32:3000/";
+            var baseUrl = "http://10.102.1.157:3000/";
             var apiUrl = baseUrl + "api/";
             var client = new HttpClient
             {

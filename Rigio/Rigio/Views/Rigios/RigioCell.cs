@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using Autofac;
+﻿using Autofac;
 using Rigio.Data;
 using Rigio.Models;
 using Xamarin.Forms;

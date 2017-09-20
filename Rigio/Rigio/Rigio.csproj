@@ -37,7 +37,6 @@
   <ItemGroup>
     <Compile Include="App.cs" />
     <Compile Include="AppSetup.cs" />
-    <Compile Include="Data\ServicesManager.cs" />
     <Compile Include="Data\AccountService.cs" />
     <Compile Include="Data\InvitationServices.cs" />
     <Compile Include="Data\MatchService.cs" />

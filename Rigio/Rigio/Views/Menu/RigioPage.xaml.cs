@@ -120,8 +120,8 @@ namespace Rigio.Views.Menu
         {
             base.OnAppearing();
 
-            //lvRigios.ItemsSource = await ((MatchService)App.Container.Resolve<IMatchService>()).GetMatches();
-            lvRigios.ItemsSource = await App.AccountManager.GetMatches();
+            lvRigios.ItemsSource = await ((MatchService)App.Container.Resolve<IMatchService>()).GetMatches();
+           // lvRigios.ItemsSource = await App.AccountManager.GetMatches();
         }
     }
 }

@@ -76,7 +76,7 @@ namespace Rigio.Views.Rigios
                 if (!response) return;
 
                 var mi = ((MenuItem)sender).CommandParameter as Match;
-                await ((MatchService)AppSetup.Instance.Resolve<IAccountService>()).DeleteMatchById((int)mi.id);
+                await ((MatchService)AppSetup.Instance.Resolve<IMatchService>()).DeleteMatchById((int)mi.id);
 
                 ((ListView)Parent).ItemsSource = await ((MatchService)AppSetup.Instance.Resolve<IMatchService>()).GetMatches();
             };

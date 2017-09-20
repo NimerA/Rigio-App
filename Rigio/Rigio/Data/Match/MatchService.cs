@@ -11,15 +11,15 @@ namespace Rigio.Data
 {
     public class MatchService: IMatchService
     {
-		private readonly HttpClient _client;
+        private readonly IHttpService Client;
 		private readonly JsonSerializerSettings _jsonSettings;
-        private readonly IAccountInfo _accountInfo;
+        private readonly IAccountInfo AccountInfo;
 
-        public MatchService(HttpClient client, JsonSerializerSettings jsonSettings, IAccountInfo accountInfo)
+        public MatchService(IHttpService client, JsonSerializerSettings jsonSettings, IAccountInfo accountInfo)
 		{
-            _client = client;
+            Client = client;
             _jsonSettings = jsonSettings;
-            _accountInfo = accountInfo;
+            AccountInfo = accountInfo;
 		}
 
        string getMatchUrl(int id)
@@ -28,7 +28,7 @@ namespace Rigio.Data
 		}
 
         string getMatchUrl() {
-            return "users/" + _accountInfo.GetUserId() + "/matches";
+            return "users/" + AccountInfo.GetUserId() + "/matches";
         }
 
         public async Task<List<Match>> GetMatches()
@@ -36,9 +36,8 @@ namespace Rigio.Data
             List<Match> matches = null;
             try
             {
-                var response = await _client.GetAsync(getMatchUrl());
-                var content = await response.Content.ReadAsStringAsync();
-                matches = JsonConvert.DeserializeObject<List<Match>>(content, _jsonSettings);
+                var response = await Client.Get(getMatchUrl());
+                matches = JsonConvert.DeserializeObject<List<Match>>(response.Content, _jsonSettings);
             }
             catch (Exception e)
             {
@@ -50,12 +49,11 @@ namespace Rigio.Data
         public async Task<bool> UpdateMatch(Match match)
         {
 			string json = JsonConvert.SerializeObject(match, _jsonSettings);
-			var content = new StringContent(json, Encoding.UTF8, "application/json");
 
 			var success = false;
 			try
 			{
-                var response = await _client.PutAsync(getMatchUrl(match.id ?? default(int)), content);
+                var response = await Client.Put(getMatchUrl(match.id ?? default(int)), json);
 				success = response.IsSuccessStatusCode;
 			}
 			catch (Exception e)
@@ -67,12 +65,11 @@ namespace Rigio.Data
 
         public async Task<Match> GetMatchById(int id)
         {
-			var response = await _client.GetAsync(getMatchUrl(id));
             Match match = null;
 			try
 			{
-				var content = await response.Content.ReadAsStringAsync();
-				match = JsonConvert.DeserializeObject<Match>(content, _jsonSettings);
+                var response = await Client.Get(getMatchUrl(id));
+				match = JsonConvert.DeserializeObject<Match>(response.Content, _jsonSettings);
 			}
 			catch (Exception e)
 			{
@@ -83,20 +80,17 @@ namespace Rigio.Data
 
         public async Task<bool> DeleteMatchById(int id)
         {
-            var response = await _client.DeleteAsync(getMatchUrl(id));
+            var response = await Client.Delete(getMatchUrl(id));
             return response.IsSuccessStatusCode;
         }
 
         public async Task<bool> CreateMatch(Match match)
         {
-            string json = JsonConvert.SerializeObject(match, _jsonSettings);
-            var content = new StringContent(json, Encoding.UTF8, "application/json");
-
             var success = false;
             try
             {
-                var url = getMatchUrl();
-                var response = await _client.PostAsync(getMatchUrl(), content);
+                string json = JsonConvert.SerializeObject(match, _jsonSettings);
+                var response = await Client.Post(getMatchUrl(), json);
                 success = response.IsSuccessStatusCode;
             }catch(Exception e)
             {

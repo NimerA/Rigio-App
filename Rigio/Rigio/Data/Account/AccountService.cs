@@ -10,15 +10,15 @@ namespace Rigio.Data
 {
     public class AccountService : IAccountService
     {
-        private readonly HttpClient _client;
-        private readonly JsonSerializerSettings _jsonSettings;
-        private readonly string _baseUrl;
+        private readonly IHttpService Client;
+        private readonly JsonSerializerSettings JsonSettings;
+        private readonly string BaseUrl;
 
-        public AccountService(string baseUrl, HttpClient client, JsonSerializerSettings jsonSettings)
+        public AccountService(string baseUrl, IHttpService client, JsonSerializerSettings jsonSettings)
         {
-            _baseUrl = baseUrl;
-            _client = client;
-            _jsonSettings = jsonSettings;
+            BaseUrl = baseUrl;
+            Client = client;
+            JsonSettings = jsonSettings;
         }
 
         public async Task<Account> GetAccounts(string facebookToken)
@@ -26,14 +26,14 @@ namespace Rigio.Data
             Account account = null;
             try
             {
-                var restUrl = _baseUrl + "auth/facebook-token/callback?access_token=" + facebookToken;
+                var restUrl = BaseUrl + "auth/facebook-token/callback?access_token=" + facebookToken;
                 var client = new HttpClient();
                 var response = await client.GetAsync(restUrl);
                 if (response.IsSuccessStatusCode)
                 {
                     var content = await response.Content.ReadAsStringAsync();
                     account = JsonConvert.DeserializeObject<Account>(content);
-                    _client.DefaultRequestHeaders.Add("access_token", account.Loopback_Access_Token);
+                    Client.AddRequestHeader("access_token", account.Loopback_Access_Token);
                 }
             }
             catch (Exception ex)
@@ -48,7 +48,7 @@ namespace Rigio.Data
         {
             try
             {
-                var response = await _client.PostAsync("users/logout", null);
+                var response = await Client.Post("users/logout", null);
                 return response.IsSuccessStatusCode;
             }
             catch (Exception ex)
@@ -63,9 +63,8 @@ namespace Rigio.Data
             List<User> users = null;
             try
             {
-                var response = await _client.GetAsync("users/getUsers");
-                var content = await response.Content.ReadAsStringAsync();
-                users = JsonConvert.DeserializeObject<List<User>>(content, _jsonSettings);
+                var response = await Client.Get("users/getUsers");
+                users = JsonConvert.DeserializeObject<List<User>>(response.Content, JsonSettings);
             }
             catch (Exception e)
             {

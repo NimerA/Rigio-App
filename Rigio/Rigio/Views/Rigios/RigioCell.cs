@@ -34,12 +34,6 @@ namespace Rigio.Views.Rigios
             };
             descriptionData.SetBinding(Label.TextProperty, new Binding("Description"));
 
-            var dateLabel = new Label
-            {
-                HorizontalOptions = LayoutOptions.Start,
-                Text = "Fecha:"
-            };
-
             var dateData = new Label
             {
                 HorizontalOptions = LayoutOptions.Start
@@ -58,12 +52,6 @@ namespace Rigio.Views.Rigios
                 Orientation = StackOrientation.Horizontal
             };
 
-            //var panel3 = new StackLayout
-            //{
-            //    Children = { dateLabel, dateData },
-            //    Orientation = StackOrientation.Horizontal
-            //};
-            
             View = new StackLayout
             {
                 Children = { panel1, panel2 },
@@ -92,11 +80,6 @@ namespace Rigio.Views.Rigios
                 await ((MatchService)App.Container.Resolve<IAccountService>()).DeleteMatchById((int)mi.id);
 
                 ((ListView)Parent).ItemsSource = await ((MatchService)App.Container.Resolve<IMatchService>()).GetMatches();
-                //await App.AccountManager.DeleteMatch((int)mi.id);
-
-                //((ListView)Parent).ItemsSource = await App.AccountManager.GetMatches();
-
-
             };
             // add to the ViewCell's ContextActions property
             ContextActions.Add(editAction);

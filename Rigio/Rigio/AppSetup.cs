@@ -7,7 +7,7 @@ using Rigio.Data;
 
 namespace Rigio
 {
-    public class AppSetup
+    public static class AppSetup
     {
         public static IContainer CreateContainer()
         {
@@ -30,14 +30,9 @@ namespace Rigio
             var accountInfo = new AccountInfo();
 
             // Services
-
             cb.Register(ctx => new AccountService(baseUrl,client,jsonSettings)).As<IAccountService>();
             cb.Register(ctx => new MatchService(client, jsonSettings, accountInfo)).As<IMatchService>();
             cb.Register(ctx => new InvitationService(client, jsonSettings, accountInfo)).As<IInvitationService>();
-            //cb.RegisterType<AccountService>().As<IAccountService>().SingleInstance();
-            //cb.RegisterType<AccountInfo>().As<IAccountInfo>().SingleInstance();
-            //cb.RegisterType<InvitationService>().As<IInvitationService>().SingleInstance();
-            //cb.RegisterType<MatchService>().As<IMatchService>().SingleInstance();
 
             //cb.RegisterInstance(DependencyService.Get<IFacebookService>()).As<IFacebookService>().SingleInstance();
 

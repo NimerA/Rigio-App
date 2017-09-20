@@ -83,7 +83,6 @@ namespace Rigio.Views
                     break;
                 case LoginState.Success:
                    var account = await ((AccountService) App.Container.Resolve<IAccountService>()).GetAccounts(loginResult.Token);
-                    //var account = await App.AccountManager.GetAccount(loginResult.Token);
                     if (ValidateAccount(account))
                         Application.Current.MainPage = new NavigationPage(new MainPage());
                     break;

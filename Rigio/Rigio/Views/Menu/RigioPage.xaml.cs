@@ -119,7 +119,7 @@ namespace Rigio.Views.Menu
         protected override async void OnAppearing()
         {
             base.OnAppearing();
-            lvRigios.ItemsSource = await ((MatchService)App.Container.Resolve<IMatchService>()).GetMatches();
+            lvRigios.ItemsSource = await ((MatchService)AppSetup.Instance.Resolve<IMatchService>()).GetMatches();
         }
     }
 }

@@ -11,15 +11,15 @@ namespace Rigio.Data
 {
     public class InvitationService: IInvitationService
     {
-		private readonly HttpClient _client;
-		private readonly JsonSerializerSettings _jsonSettings;
-        private readonly IAccountInfo _accountInfo;
+        private readonly IHttpService Client;
+        private readonly JsonSerializerSettings JsonSettings;
+        private readonly IAccountInfo AccountInfo;
 
-        public InvitationService(HttpClient client, JsonSerializerSettings jsonSettings, IAccountInfo accountInfo)
+        public InvitationService(IHttpService client, JsonSerializerSettings jsonSettings, IAccountInfo accountInfo)
 		{
-			_client = client;
-			_jsonSettings = jsonSettings;
-            _accountInfo = accountInfo;
+			Client = client;
+			JsonSettings = jsonSettings;
+            AccountInfo = accountInfo;
 		}
 
         string getInvitationSentUrl()
@@ -39,17 +39,16 @@ namespace Rigio.Data
 
         string getInvitationBaseUrl()
         {
-            return "users/" + _accountInfo.GetUserId() + "/Invitations";
+            return "users/" + AccountInfo.GetUserId() + "/Invitations";
         }
 
         public async Task<Invitation> GetInvitationById(int id)
         {
-            var response = await _client.GetAsync(getInvitationSentUrl(id));
             Invitation invitation = null;
             try
             {
-                var content = await response.Content.ReadAsStringAsync();
-                invitation = JsonConvert.DeserializeObject<Invitation>(content, _jsonSettings);
+				var response = await Client.Get(getInvitationSentUrl(id));
+				invitation = JsonConvert.DeserializeObject<Invitation>(response.Content, JsonSettings);
             }
             catch (Exception e)
             {
@@ -60,13 +59,11 @@ namespace Rigio.Data
 
         public async Task<List<Invitation>> GetInvitationRecieved()
         {
-            var response = await _client.GetAsync(getInvitationRecievedUrl());
-
             List<Invitation> invitations = null;
             try
             {
-                var content = await response.Content.ReadAsStringAsync();
-                invitations = JsonConvert.DeserializeObject<List<Invitation>>(content, _jsonSettings);
+				var response = await Client.Get(getInvitationRecievedUrl());
+				invitations = JsonConvert.DeserializeObject<List<Invitation>>(response.Content, JsonSettings);
             }
             catch (Exception e)
             {
@@ -77,13 +74,11 @@ namespace Rigio.Data
 
         public async Task<List<Invitation>> GetInvitationSent()
         {
-            var response = await _client.GetAsync(getInvitationSentUrl());
-
             List<Invitation> invitations = null;
             try
             {
-                var content = await response.Content.ReadAsStringAsync();
-                invitations = JsonConvert.DeserializeObject<List<Invitation>>(content, _jsonSettings);
+				var response = await Client.Get(getInvitationSentUrl());
+                invitations = JsonConvert.DeserializeObject<List<Invitation>>(response.Content, JsonSettings);
             }
             catch (Exception e)
             {
@@ -94,13 +89,12 @@ namespace Rigio.Data
 
         public async Task<bool> CreateInvitation(Invitation invitation)
         {
-            string json = JsonConvert.SerializeObject(invitation, _jsonSettings);
-            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            string json = JsonConvert.SerializeObject(invitation, JsonSettings);
 
             var success = false;
             try
             {
-                var response = await _client.PostAsync(getInvitationSentUrl(), content);
+                var response = await Client.Post(getInvitationSentUrl(), json);
                 success = response.IsSuccessStatusCode;
             }
             catch (Exception e)
@@ -112,19 +106,18 @@ namespace Rigio.Data
 
         public async Task<bool> DeleteInvitationById(int id)
         {
-            var response = await _client.DeleteAsync(getInvitationSentUrl(id));
+            var response = await Client.Delete(getInvitationSentUrl(id));
             return response.IsSuccessStatusCode;
         }
 
         public async Task<bool> UpdateInvitation(Invitation invitation)
         {
-            string json = JsonConvert.SerializeObject(invitation, _jsonSettings);
-            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            string json = JsonConvert.SerializeObject(invitation, JsonSettings);
 
             var success = false;
             try
             {
-                var response = await _client.PutAsync(getInvitationSentUrl(invitation.id ?? default(int)), content);
+                var response = await Client.Put(getInvitationSentUrl(invitation.id ?? default(int)), json);
                 success = response.IsSuccessStatusCode;
             }
             catch (Exception e)

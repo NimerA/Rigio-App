@@ -37,10 +37,6 @@
   <ItemGroup>
     <Compile Include="App.cs" />
     <Compile Include="AppSetup.cs" />
-    <Compile Include="Data\AccountService.cs" />
-    <Compile Include="Data\InvitationServices.cs" />
-    <Compile Include="Data\MatchService.cs" />
-    <Compile Include="Data\IAccountService.cs" />
     <Compile Include="Data\IFacebookService.cs" />
     <Compile Include="Models\Account.cs" />
     <Compile Include="Models\FootballField.cs" />
@@ -68,10 +64,17 @@
       <DependentUpon>SettingsPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Rigios\RigioCell.cs" />
-    <Compile Include="Data\IMatchService.cs" />
-    <Compile Include="Data\AccountInfo.cs" />
-    <Compile Include="Data\IAccountInfo.cs" />
-    <Compile Include="Data\IInvitationService.cs" />
+    <Compile Include="Models\Response.cs" />
+    <Compile Include="Data\Match\IMatchService.cs" />
+    <Compile Include="Data\Match\MatchService.cs" />
+    <Compile Include="Data\Account\AccountService.cs" />
+    <Compile Include="Data\Account\IAccountService.cs" />
+    <Compile Include="Data\AccountInfo\AccountInfo.cs" />
+    <Compile Include="Data\AccountInfo\IAccountInfo.cs" />
+    <Compile Include="Data\Invitation\IInvitationService.cs" />
+    <Compile Include="Data\Invitation\InvitationServices.cs" />
+    <Compile Include="Data\Client\HttpService.cs" />
+    <Compile Include="Data\Client\IHttpService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Autofac, Version=3.5.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
@@ -146,6 +149,13 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Data\Match\" />
+    <Folder Include="Data\Account\" />
+    <Folder Include="Data\AccountInfo\" />
+    <Folder Include="Data\Invitation\" />
+    <Folder Include="Data\Client\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="..\..\packages\Xamarin.Forms.2.3.4.247\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.targets" Condition="Exists('..\..\packages\Xamarin.Forms.2.3.4.247\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.targets')" />

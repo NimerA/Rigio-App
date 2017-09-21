@@ -9,14 +9,8 @@ namespace Rigio
     {
         public static Account Account { get; private set; }
 
-        public static IContainer Container { get; set; }
-
         public App()
 		{
-            var builder = AppSetup.CreateContainer();
-
-            Container = builder;
-
             Account = new Account();
             MainPage = new NavigationPage(new LoginPage());
         }

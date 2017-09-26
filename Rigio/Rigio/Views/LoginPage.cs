@@ -68,7 +68,7 @@ namespace Rigio.Views
         private async Task Login()
         {
             _hintLabel.Text = "Login. Please wait";
-            var loginResult = await DependencyService.Get<IFacebookService>().Login();
+            var loginResult = await AppSetup.Instance.Resolve<IFacebookService>().Login();
             _loginButton.IsEnabled = false;
             await ProccessLoginResult(loginResult);
         }

@@ -12,7 +12,7 @@ namespace Rigio
     public class AppSetup
     {
         private static IContainer _instance;
-        public static string BaseUrl = "http://192.168.0.9:3000/";
+        public static string BaseUrl = "http://192.168.161.1:3000/";
 
         private AppSetup()
         {

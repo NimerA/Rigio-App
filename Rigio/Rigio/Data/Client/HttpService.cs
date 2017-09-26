@@ -34,7 +34,7 @@ namespace Rigio.Data.Client
 
 		public async Task<Response> Post(string url, string content)
 		{
-			var stringContent = new StringContent(content, Encoding.UTF8, "application/json");
+			var stringContent = content == null ? null : new StringContent(content, Encoding.UTF8, "application/json");
 			var response = await Client.PostAsync(url, stringContent);
 			return new Response((int)response.StatusCode, await response.Content.ReadAsStringAsync());
 		}
